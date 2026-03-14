@@ -42,18 +42,23 @@ public abstract class DefaultIpLocatorProvider : IIpLocatorProvider
     private readonly List<string> _localhostList = [.. new[] { "::1", "127.0.0.1" }];
 
     /// <summary>
-    /// <inheritdoc/>
+    /// <inheritdoc cref="IIpLocatorProvider.Key"/>
     /// </summary>
     public string? Key { get; set; }
+
+    /// <summary>
+    /// <inheritdoc cref="IIpLocatorProvider.LastError"/>
+    /// </summary>
+    public string? LastError { get; protected set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     /// <param name="ip"></param>
-    /// <returns></returns>
     public async Task<string?> Locate(string? ip)
     {
         string? ret = null;
+        LastError = null;
 
         // 解析本机地址
         if (string.IsNullOrEmpty(ip) || _localhostList.Any(p => p == ip))
@@ -89,6 +94,5 @@ public abstract class DefaultIpLocatorProvider : IIpLocatorProvider
     /// <para lang="en">Internal Locate Method</para>
     /// </summary>
     /// <param name="ip"></param>
-    /// <returns></returns>
     protected abstract Task<string?> LocateByIp(string ip);
 }

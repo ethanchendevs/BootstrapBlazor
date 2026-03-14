@@ -9,18 +9,17 @@ using System.Text;
 namespace BootstrapBlazor.Components;
 
 /// <summary>
-/// <para lang="zh"></para>
-/// <para lang="en"></para>
+/// <para lang="zh">Exception 异常扩展类</para>
+/// <para lang="en">Exception extension class</para>
 /// </summary>
 public static class ExceptionExtensions
 {
     /// <summary>
     /// <para lang="zh">格式化异常信息</para>
-    /// <para lang="en">格式化exception信息</para>
+    /// <para lang="en">Format exception information</para>
     /// </summary>
     /// <param name="exception"></param>
     /// <param name="collection"></param>
-    /// <returns></returns>
     public static string Format(this Exception exception, NameValueCollection? collection = null)
     {
         var logger = new StringBuilder();
@@ -44,12 +43,11 @@ public static class ExceptionExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">格式化异常信息</para>
-    /// <para lang="en">格式化exception信息</para>
+    /// <para lang="zh">格式化异常信息为 MarkupString</para>
+    /// <para lang="en">Format exception information to MarkupString</para>
     /// </summary>
     /// <param name="exception"></param>
     /// <param name="collection"></param>
-    /// <returns></returns>
     public static MarkupString FormatMarkupString(this Exception exception, NameValueCollection? collection = null)
     {
         var message = Format(exception, collection);

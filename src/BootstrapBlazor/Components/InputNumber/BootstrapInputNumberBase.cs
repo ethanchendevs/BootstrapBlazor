@@ -12,11 +12,9 @@ namespace BootstrapBlazor.Components;
 public class BootstrapInputNumberBase<TValue> : BootstrapInputEventBase<TValue>
 {
     /// <summary>
-    /// <para lang="zh">SetParametersAsync 方法</para>
-    /// <para lang="en">SetParametersAsync Method</para>
+    /// <inheritdoc/>
     /// </summary>
     /// <param name="parameters"></param>
-    /// <returns></returns>
     public override Task SetParametersAsync(ParameterView parameters)
     {
         // Unwrap Nullable<T>, because InputBase already deals with the Nullable aspect

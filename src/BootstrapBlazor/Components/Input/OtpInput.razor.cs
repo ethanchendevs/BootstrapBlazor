@@ -6,40 +6,36 @@
 namespace BootstrapBlazor.Components;
 
 /// <summary>
-/// <para lang="zh">OTP input component</para>
+/// <para lang="zh">OTP 输入组件</para>
 /// <para lang="en">OTP input component</para>
 /// </summary>
 [BootstrapModuleAutoLoader("Input/OtpInput.razor.js", JSObjectReference = true)]
 public partial class OtpInput
 {
     /// <summary>
-    /// <para lang="zh">获得/设置 the length of the OTP input. 默认为 6.</para>
-    /// <para lang="en">Gets or sets the length of the OTP input. Default is 6.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 OTP 输入的长度。默认为 6</para>
+    /// <para lang="en">Gets or sets the length of the OTP input. Default is 6</para>
     /// </summary>
     [Parameter]
     public int Digits { get; set; } = 6;
 
     /// <summary>
-    /// <para lang="zh">获得/设置 是否 the OTP input is readonly. 默认为 false.</para>
-    /// <para lang="en">Gets or sets whether the OTP input is readonly. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 OTP 输入是否只读。默认为 false</para>
+    /// <para lang="en">Gets or sets whether the OTP input is readonly. Default is false</para>
     /// </summary>
     [Parameter]
     public bool IsReadonly { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 the value 类型 of the OTP input. 默认为 <see cref="OtpInputType.Number"/>.</para>
-    /// <para lang="en">Gets or sets the value type of the OTP input. Default is <see cref="OtpInputType.Number"/>.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 OTP 输入的值类型。默认为 <see cref="OtpInputType.Number"/></para>
+    /// <para lang="en">Gets or sets the value type of the OTP input. Default is <see cref="OtpInputType.Number"/></para>
     /// </summary>
     [Parameter]
     public OtpInputType Type { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 the placeholder of the OTP input. 默认为 null.</para>
-    /// <para lang="en">Gets or sets the placeholder of the OTP input. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 OTP 输入的占位符。默认为 null</para>
+    /// <para lang="en">Gets or sets the placeholder of the OTP input. Default is null</para>
     /// </summary>
     [Parameter]
     public string? PlaceHolder { get; set; }
@@ -99,7 +95,6 @@ public partial class OtpInput
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
     protected override Task InvokeInitAsync() => InvokeVoidAsync("init", Id, Interop, nameof(TriggerSetValue));
 
     private char? GetValueString(int index)
@@ -108,11 +103,10 @@ public partial class OtpInput
     }
 
     /// <summary>
-    /// <para lang="zh">Trigger value changed event 回调. Trigger by JavaScript.</para>
-    /// <para lang="en">Trigger value changed event callback. Trigger by JavaScript.</para>
+    /// <para lang="zh">触发值更改事件回调。由 JavaScript 触发</para>
+    /// <para lang="en">Trigger value changed event callback. Trigger by JavaScript</para>
     /// </summary>
     /// <param name="val"></param>
-    /// <returns></returns>
     [JSInvokable]
     public Task TriggerSetValue(string[] val)
     {

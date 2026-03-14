@@ -6,15 +6,14 @@
 namespace BootstrapBlazor.Components;
 
 /// <summary>
-///  <para lang="zh">StringFilter component</para>
-///  <para lang="en">StringFilter component</para>
+/// <para lang="zh">StringFilter 组件</para>
+/// <para lang="en">StringFilter component</para>
 /// </summary>
 public partial class StringFilter
 {
     /// <summary>
-    ///  <para lang="zh">获得/设置 the filter candidate items. It is recommended to use static 数据 to avoid performance loss.</para>
-    ///  <para lang="en">Gets or sets the filter candidate items. It is recommended to use static data to avoid performance loss.</para>
-    ///  <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 过滤候选项集合 建议使用静态数据以避免性能损耗</para>
+    /// <para lang="en">Gets or sets the filter candidate items. It is recommended to use static data to avoid performance loss</para>
     /// </summary>
     [Parameter]
     public IEnumerable<SelectedItem>? Items { get; set; }
@@ -29,8 +28,7 @@ public partial class StringFilter
         .Build();
 
     /// <summary>
-    ///  <para lang="zh"><inheritdoc/></para>
-    ///  <para lang="en"><inheritdoc/></para>
+    /// <inheritdoc/>
     /// </summary>
     protected override void OnInitialized()
     {
@@ -40,8 +38,7 @@ public partial class StringFilter
     }
 
     /// <summary>
-    ///  <para lang="zh"><inheritdoc/></para>
-    ///  <para lang="en"><inheritdoc/></para>
+    /// <inheritdoc/>
     /// </summary>
     protected override void OnParametersSet()
     {
@@ -57,8 +54,7 @@ public partial class StringFilter
     }
 
     /// <summary>
-    ///  <para lang="zh"><inheritdoc/></para>
-    ///  <para lang="en"><inheritdoc/></para>
+    /// <inheritdoc cref="IFilterAction.Reset"/>
     /// </summary>
     public override void Reset()
     {
@@ -72,10 +68,8 @@ public partial class StringFilter
     }
 
     /// <summary>
-    ///  <para lang="zh"><inheritdoc/></para>
-    ///  <para lang="en"><inheritdoc/></para>
+    /// <inheritdoc cref="IFilterAction.GetFilterConditions"/>
     /// </summary>
-    /// <returns></returns>
     public override FilterKeyValueAction GetFilterConditions()
     {
         var filter = new FilterKeyValueAction();
@@ -103,8 +97,7 @@ public partial class StringFilter
     }
 
     /// <summary>
-    ///  <para lang="zh"><inheritdoc/></para>
-    ///  <para lang="en"><inheritdoc/></para>
+    /// <inheritdoc cref="IFilterAction.SetFilterConditionsAsync(FilterKeyValueAction)"/>
     /// </summary>
     public override async Task SetFilterConditionsAsync(FilterKeyValueAction filter)
     {

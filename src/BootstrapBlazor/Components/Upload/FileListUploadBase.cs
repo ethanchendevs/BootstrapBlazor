@@ -13,25 +13,15 @@ namespace BootstrapBlazor.Components;
 public class FileListUploadBase<TValue> : UploadBase<TValue>
 {
     /// <summary>
-    /// <para lang="zh">获得/设置 是否显示删除按钮，默认 false</para>
-    /// <para lang="en">Gets or sets whether to display the delete button. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
-    /// </summary>
-    [Parameter]
-    public bool ShowDeleteButton { get; set; }
-
-    /// <summary>
     /// <para lang="zh">获得/设置 删除按钮图标</para>
     /// <para lang="en">Gets or sets the delete button icon</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public string? DeleteIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示下载按钮，默认 false</para>
-    /// <para lang="en">Gets or sets whether to display the download button. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to display the download button. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowDownloadButton { get; set; }
@@ -39,15 +29,13 @@ public class FileListUploadBase<TValue> : UploadBase<TValue>
     /// <summary>
     /// <para lang="zh">获得/设置 下载按钮图标</para>
     /// <para lang="en">Gets or sets the download button icon</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public string? DownloadIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 点击下载按钮回调方法，默认 null</para>
-    /// <para lang="en">Gets or sets the callback method for the download button click event. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method for the download button click event. Default is null</para>
     /// </summary>
     [Parameter]
     public Func<UploadFile, Task>? OnDownload { get; set; }
@@ -55,15 +43,13 @@ public class FileListUploadBase<TValue> : UploadBase<TValue>
     /// <summary>
     /// <para lang="zh">获得/设置 取消按钮图标</para>
     /// <para lang="en">Gets or sets the cancel button icon</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public string? CancelIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 点击取消按钮回调方法，默认 null</para>
-    /// <para lang="en">Gets or sets the callback method for the cancel button click event. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method for the cancel button click event. Default is null</para>
     /// </summary>
     [Parameter]
     public Func<UploadFile, Task>? OnCancel { get; set; }

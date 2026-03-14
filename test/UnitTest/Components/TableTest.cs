@@ -390,7 +390,6 @@ public class TableTest : BootstrapBlazorTestBase
                 pb.Add(a => a.ShowToolbar, true);
                 pb.Add(a => a.ShowSearch, true);
                 pb.Add(a => a.ShowSearchText, true);
-                pb.Add(a => a.AutoSearchOnInput, false);
                 pb.Add(a => a.ShowSearchTextTooltip, false);
                 pb.Add(a => a.SearchMode, SearchMode.Top);
                 pb.Add(a => a.Items, Foo.GenerateFoo(localizer, 2));
@@ -408,10 +407,10 @@ public class TableTest : BootstrapBlazorTestBase
                 });
             });
         });
-        var searchBox = cut.Find(".table-toolbar-search");
-        await cut.InvokeAsync(() => searchBox.KeyUp(new KeyboardEventArgs() { Key = "Enter" }));
-        await cut.InvokeAsync(() => searchBox.KeyUp(new KeyboardEventArgs() { Key = "Escape" }));
-        await cut.InvokeAsync(() => searchBox.Change("0"));
+        var searchBox = cut.FindComponents<BootstrapInput<string?>>().FirstOrDefault(i => i.Markup.Contains("table-toolbar-search"));
+        Assert.NotNull(searchBox);
+        await cut.InvokeAsync(() => searchBox.Instance.EnterCallback());
+        await cut.InvokeAsync(() => searchBox.Instance.EscCallback());
         Assert.True(resetSearch);
     }
 
@@ -747,7 +746,7 @@ public class TableTest : BootstrapBlazorTestBase
                 pb.Add(a => a.RenderMode, TableRenderMode.Table);
                 pb.Add(a => a.ShowToolbar, true);
                 pb.Add(a => a.ShowColumnList, true);
-                pb.Add(a => a.IsPopoverToolbarDropdownButton, true);
+                pb.Add(a => a.IsPopoverToolbarDropdownButton, false);
                 pb.Add(a => a.AllowResizing, true);
                 pb.Add(a => a.ShowColumnWidthTooltip, true);
                 pb.Add(a => a.ColumnWidthTooltipPrefix, "test");
@@ -775,6 +774,7 @@ public class TableTest : BootstrapBlazorTestBase
             });
         });
         cut.Contains("Test_Column_List");
+        cut.DoesNotContain("dropdown-menu-popover");
 
         var item = cut.FindComponents<Checkbox<bool>>()[0];
         await cut.InvokeAsync(item.Instance.OnToggleClick);
@@ -782,6 +782,13 @@ public class TableTest : BootstrapBlazorTestBase
 
         await cut.InvokeAsync(item.Instance.OnToggleClick);
         Assert.False(show);
+
+        var table = cut.FindComponent<Table<Foo>>();
+        table.Render(pb =>
+        {
+            pb.Add(a => a.IsPopoverToolbarDropdownButton, true);
+        });
+        table.Contains("dropdown-menu-popover");
     }
 
     [Fact]
@@ -5398,6 +5405,7 @@ public class TableTest : BootstrapBlazorTestBase
                 pb.Add(a => a.ShowLoading, false);
                 pb.Add(a => a.RenderModeResponsiveWidth, BreakPoint.Medium);
                 pb.Add(a => a.SetRowClassFormatter, foo => "test_row_class");
+                pb.Add(a => a.SetRowStyleFormatter, foo => "height: 36px;");
                 pb.Add(a => a.TableColumns, foo => builder =>
                 {
                     builder.OpenComponent<TableColumn<Foo, string>>(0);
@@ -5408,6 +5416,7 @@ public class TableTest : BootstrapBlazorTestBase
             });
         });
         cut.Contains("test_row_class");
+        cut.Contains("height: 36px;");
     }
 
     [Fact]

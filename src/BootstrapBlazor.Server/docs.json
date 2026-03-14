@@ -242,8 +242,8 @@
     "fullscreen-button": "FullScreenButtons",
     "meet": "Meets",
     "vditor": "Vditors",
-    "socket-factory": "SocketFactories",
     "office-viewer": "OfficeViewers",
+    "socket-factory": "Sockets\\SocketFactories",
     "socket/manual-receive": "Sockets\\ManualReceives",
     "socket/auto-receive": "Sockets\\AutoReceives",
     "socket/adapter": "Sockets\\Adapters",
@@ -260,7 +260,8 @@
     "select-city": "SelectCities",
     "select-province": "SelectProvinces",
     "hik-vision": "HikVisions",
-    "embed-pdf": "EmbedPDFs"
+    "embed-pdf": "EmbedPDFs",
+    "term": "Terms"
   },
   "video": {
     "table": "BV1ap4y1x7Qn?p=1",

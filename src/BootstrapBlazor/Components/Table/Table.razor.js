@@ -1,11 +1,11 @@
 export { getResponsive } from '../../modules/responsive.js'
 import { copy, drag, getDescribedElement, getOuterHeight, getWidth, isVisible } from '../../modules/utility.js'
-import  browser from '../../modules/browser.min.mjs'
+import browser from '../../modules/browser.min.mjs'
 import Data from '../../modules/data.js'
 import EventHandler from '../../modules/event-handler.js'
 import Popover from "../../modules/base-popover.js"
 
-export function init(id, invoke, options) {
+export async function init(id, invoke, options) {
     const el = document.getElementById(id)
     if (el === null) {
         return
@@ -18,12 +18,12 @@ export function init(id, invoke, options) {
     }
     Data.set(id, table)
 
-    reset(id)
+    await reset(id)
 }
 
 export function saveColumnList(tableName, columns) {
     const key = `bb-table-column-visiable-${tableName}`
-    return localStorage.setItem(key, JSON.stringify(columns));
+    localStorage.setItem(key, JSON.stringify(columns));
 }
 
 export function reloadColumnList(tableName) {
@@ -120,7 +120,6 @@ export async function reset(id) {
     }
 
     table.pages = [...table.el.children].find(i => i.classList.contains('nav-pages'));
-
 
     setColumnToolboxListener(table);
 
@@ -433,7 +432,7 @@ const setExcelKeyboardListener = table => {
     }
 
     const setFocus = target => {
-        const handler = setTimeout(function () {
+        const handler = setTimeout(function() {
             clearTimeout(handler);
             if (target.focus) {
                 target.focus();
@@ -542,9 +541,15 @@ const resetTableWidth = table => {
         if (group) {
             let width = 0;
             [...group.children].forEach(col => {
-                width += parseInt(col.style.width)
+                let colWidth = parseInt(col.style.width);
+                if (isNaN(colWidth)) {
+                    colWidth = 100;
+                }
+                width += colWidth;
             })
-            t.style.width = `${width}px`
+            t.style.width = `${width}px`;
+
+            saveColumnWidth(table);
         }
     })
 }
@@ -824,8 +829,7 @@ const calcCellWidth = cell => {
     document.body.appendChild(div);
 
     const cellStyle = getComputedStyle(cell);
-    const width = div.offsetWidth + parseFloat(cellStyle.getPropertyValue('padding-left')) + parseFloat(cellStyle.getPropertyValue('padding-right')) + parseFloat(cellStyle.getPropertyValue('border-left-width')) + parseFloat(cellStyle.getPropertyValue('border-right-width')) + 1;
-    return width;
+    return div.offsetWidth + parseFloat(cellStyle.getPropertyValue('padding-left')) + parseFloat(cellStyle.getPropertyValue('padding-right')) + parseFloat(cellStyle.getPropertyValue('border-left-width')) + parseFloat(cellStyle.getPropertyValue('border-right-width')) + 1;
 }
 
 const closeAllTips = (columns, self) => {
@@ -1001,6 +1005,33 @@ const setToolbarDropdown = (table, toolbar) => {
             }))
         }
     })
+}
+
+export function resetColumnList(id) {
+    const table = Data.get(id);
+    if (table) {
+        const { toolbar } = table;
+        if (toolbar) {
+            const dropdown = toolbar.querySelector('.dropdown-column');
+            if (dropdown) {
+                const button = dropdown.querySelector('.dropdown-toggle');
+                const dropdownToggle = bootstrap.Dropdown.getInstance(button);
+                if (dropdownToggle) {
+                    dropdownToggle.dispose();
+                }
+                const p = table.popovers.find(i => i.el === dropdown);
+                if (p) {
+                    table.popovers = table.popovers.filter(i => i !== p);
+                    Popover.dispose(p);
+                }
+                if (button.getAttribute('data-bs-toggle') === 'bb.dropdown') {
+                    table.popovers.push(Popover.init(dropdown, {
+                        isDisabled: () => false
+                    }));
+                }
+            }
+        }
+    }
 }
 
 const saveColumnWidth = table => {

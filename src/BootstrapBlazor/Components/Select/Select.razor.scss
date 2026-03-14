@@ -1,4 +1,4 @@
-﻿@use "../../wwwroot/scss/variables" as *;
+@use "../../wwwroot/scss/variables" as *;
 
 .select,
 .popover-dropdown {
@@ -105,7 +105,7 @@
     position: absolute;
     height: 100%;
     width: var(--bb-select-append-width);
-    right: 0;
+    right: var(--bb-select-append-right);
     top: 0;
     color: var(--bb-select-append-color);
     pointer-events: none;
@@ -125,11 +125,13 @@
 
 .select,
 .auto-complete {
+    --bb-select-append-right: #{$bb-select-append-right};
+
     .clear-icon {
         position: absolute;
         height: 100%;
         width: var(--bb-select-append-width);
-        right: 0;
+        right: var(--bb-select-append-right);
         top: 0;
         color: var(--bb-select-append-color);
         align-items: center;

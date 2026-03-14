@@ -1,5 +1,4 @@
-﻿@inject IWebHostEnvironment Env
-@inject IStringLocalizer<BaseLayout> Localizer
+@inject IWebHostEnvironment Env
 @inject IOptions<WebsiteOptions> WebsiteOption
 
 <!DOCTYPE html>
@@ -19,6 +18,8 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="favicon.png">
+
+    <ResourcePreloader />
 
     <link rel="stylesheet" href="@Assets["_content/BootstrapBlazor.FontAwesome/css/font-awesome.min.css"]" />
     <link rel="stylesheet" href="@Assets["_content/BootstrapBlazor.MaterialDesign/css/md.min.css"]" />

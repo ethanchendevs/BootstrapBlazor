@@ -1,4 +1,4 @@
-﻿{
+{
   "BootstrapBlazor.Components.AutoComplete": {
     "NoDataTip": "Нет данных",
     "PlaceHolder": "Пожалуйста, введите"
@@ -99,7 +99,7 @@
   "BootstrapBlazor.Components.EqualToValidator": {
     "ErrorMessage": "Пожалуйста, введите то же значение еще раз"
   },
-  "BootstrapBlazor.Components.ErrorLogger": {
+  "BootstrapBlazor.Components.BootstrapBlazorErrorBoundary": {
     "ToastTitle": "Ошибка приложения"
   },
   "BootstrapBlazor.Components.GoTop": {
@@ -254,11 +254,16 @@
     "AlignCenterText": "По центру",
     "AlignCenterTooltipText": "Кликните для выравнивания текста по центру",
     "AlignRightText": "Вправо",
-    "AlignRightTooltipText": "Кликните для выравнивания текста вправо"
+    "AlignRightTooltipText": "Кликните для выравнивания текста вправо",
+    "ColumnListSelectAllText": "Все",
+    "ColumnListSelectInvertText": "Инвертировать",
+    "MoreButtonText": "Еще"
   },
   "BootstrapBlazor.Components.EditDialog": {
     "CloseButtonText": "Закрыть",
-    "SaveButtonText": "Сохранить"
+    "SaveButtonText": "Сохранить",
+    "CloseConfirmTitle": "Внимание",
+    "CloseConfirmContent": "Форма была изменена. Вы уверены, что хотите закрыть её?"
   },
   "BootstrapBlazor.Components.TableColumnFilter": {
     "ClearButtonText": "Очистить",
@@ -399,5 +404,8 @@
   },
   "BootstrapBlazor.Components.LoadMore": {
     "NoMoreText": "Больше данных нет"
+  },
+  "BootstrapBlazor.Components.CardUpload": {
+    "DeleteConfirmContent": "Вы уверены, что хотите удалить текущие данные?"
   }
 }

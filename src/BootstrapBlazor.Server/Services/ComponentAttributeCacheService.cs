@@ -18,6 +18,8 @@ public static class ComponentAttributeCacheService
 {
     private static readonly ConcurrentDictionary<string, List<AttributeItem>> _cache = new();
 
+    private static XDocument? _xmlDoc;
+
     /// <summary>
     /// 通过组件类型获取组件的 AttributeItem 列表
     /// </summary>
@@ -34,23 +36,32 @@ public static class ComponentAttributeCacheService
 
     private static List<AttributeItem> GetAttributeCore(Type type)
     {
-        var attributes = new List<AttributeItem>();
-        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(p => p.GetCustomAttribute<ParameterAttribute>() != null);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        var xmlDoc = GetXmlDocumentation(type.Assembly);
-        foreach (var property in properties)
+        // 检查是否为 IComponent 实现类
+        if (typeof(IComponent).IsAssignableFrom(type))
         {
-            var item = new AttributeItem
-            {
-                Name = property.Name,
-                Type = GetFriendlyTypeName(property.PropertyType),
-                Description = GetSummary(xmlDoc, property) ?? "",
-                Version = GetVersion(xmlDoc, property) ?? "10.0.0"
-            };
-            attributes.Add(item);
+            properties = properties.Where(p => p.GetCustomAttribute<ParameterAttribute>() != null)
+                .ToArray();
         }
-        return attributes.OrderBy(i => i.Name).ToList();
+
+        // 获得 BootstrapBlazor 程序集 xml 文档
+        _xmlDoc ??= GetXmlDocumentation(typeof(BootstrapBlazorRoot).Assembly);
+        XDocument? xmlDoc = null;
+        if (type.Assembly.GetName().Name != "BootstrapBlazor")
+        {
+            // 扩展组件包
+            xmlDoc = GetXmlDocumentation(type.Assembly);
+        }
+
+        return properties.Select(property => new AttributeItem
+        {
+            Name = property.Name,
+            Type = GetFriendlyTypeName(property.PropertyType),
+            Description = GetSummary(xmlDoc, property) ?? "",
+            Version = GetVersion(xmlDoc, property),
+            IsObsolete = property.GetCustomAttribute<ObsoleteAttribute>() != null
+        }).OrderBy(i => i.Name).ToList();
     }
 
     /// <summary>
@@ -58,40 +69,49 @@ public static class ComponentAttributeCacheService
     /// </summary>
     private static string? GetSummary(XDocument? xmlDoc, PropertyInfo property)
     {
-        if (xmlDoc == null) return null;
+        var type = property.DeclaringType ?? property.PropertyType;
+        var typeName = $"BootstrapBlazor.Components.{type.Name}";
+        var memberName = $"P:{typeName}.{property.Name}";
+        var summaryElement = FindSummaryElement(xmlDoc, memberName);
+        return summaryElement == null ? null : GetLocalizedSummary(summaryElement);
+    }
 
-        var memberName = $"P:{property.DeclaringType?.FullName}.{property.Name}";
-        var memberElement = xmlDoc.Descendants("member")
+    private static XElement? FindSummaryElement(XDocument? xmlDoc, string memberName)
+    {
+        // 如果 xmlDoc 为空表示为 BootstrapBlazor 组件
+        var memberElement = xmlDoc?.Descendants("member")
+            .FirstOrDefault(x => x.Attribute("name")?.Value == memberName)
+            ?? _xmlDoc?.Descendants("member")
             .FirstOrDefault(x => x.Attribute("name")?.Value == memberName);
 
-        if (memberElement == null) return null;
+        var summaryElement = memberElement?.Element("summary");
+        if (summaryElement == null)
+        {
+            return null;
+        }
 
-        var summaryElement = memberElement.Element("summary");
-        if (summaryElement == null) return null;
+        var v = summaryElement.Element("inheritdoc")?.Attribute("cref")?.Value;
+        return v != null ? FindSummaryElement(xmlDoc, v) : summaryElement;
+    }
 
-        // 获取当前语言（zh-CN -> zh, en-US -> en）
+    private static string? GetLocalizedSummary(XElement? summaryElement)
+    {
+        if (summaryElement == null)
+        {
+            return null;
+        }
+
         var currentLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-        // 查找匹配当前语言的 para 元素
         var langPara = summaryElement.Elements("para")
             .FirstOrDefault(p => p.Attribute("lang")?.Value == currentLanguage);
-
         if (langPara != null)
         {
             return langPara.Value.Trim();
         }
 
-        // 如果找不到当前语言，回退到第一个有 lang 属性的 para（通常是 zh）
         var firstLangPara = summaryElement.Elements("para")
             .FirstOrDefault(p => p.Attribute("lang") != null);
-
-        if (firstLangPara != null)
-        {
-            return firstLangPara.Value.Trim();
-        }
-
-        // 如果都没有，返回整个 summary 的文本（向后兼容旧格式）
-        return summaryElement.Value.Trim();
+        return firstLangPara != null ? firstLangPara.Value.Trim() : summaryElement.Value.Trim();
     }
 
     /// <summary>
@@ -105,16 +125,13 @@ public static class ComponentAttributeCacheService
         var memberElement = xmlDoc.Descendants("member")
             .FirstOrDefault(x => x.Attribute("name")?.Value == memberName);
 
-        if (memberElement == null) return null;
-
         // 在 summary 节点下查找包含 version 的 para 节点
         // XML 格式: <summary><para><version>10.2.2</version></para></summary>
-        var summaryElement = memberElement.Element("summary");
-        if (summaryElement == null) return null;
+        var summaryElement = memberElement?.Element("summary");
 
         // 查找第一个包含 version 元素的 para
         // 直接在循环中返回，避免创建中间变量
-        return summaryElement.Elements("para")
+        return summaryElement?.Elements("para")
             .Select(p => p.Element("version"))
             .FirstOrDefault(v => v != null)
             ?.Value.Trim();
@@ -133,12 +150,14 @@ public static class ComponentAttributeCacheService
             {
                 genericTypeName = genericTypeName.Substring(0, backtickIndex);
             }
+
             var genericArgs = string.Join(", ", type.GetGenericArguments().Select(GetFriendlyTypeName));
             return $"{genericTypeName}<{genericArgs}>";
         }
 
         return type.Name switch
         {
+            "UInt32" => "uint",
             "Int32" => "int",
             "String" => "string",
             "Boolean" => "bool",

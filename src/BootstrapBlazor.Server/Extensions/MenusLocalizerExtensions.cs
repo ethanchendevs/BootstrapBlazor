@@ -223,7 +223,6 @@ internal static class MenusLocalizerExtensions
             {
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["TcpSocketFactory"],
                     Url = "socket-factory"
                 },
@@ -249,7 +248,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["SocketDataEntity"],
                     Url = "socket/data-entity"
                 }
@@ -264,7 +262,6 @@ internal static class MenusLocalizerExtensions
             {
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["ModbusFactory"],
                     Url = "modbus-factory"
                 }
@@ -279,7 +276,6 @@ internal static class MenusLocalizerExtensions
             {
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["SerialPortFactory"],
                     Url = "serial-port-factory"
                 }
@@ -507,19 +503,16 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["SelectRegion"],
                     Url = "select-region"
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["SelectProvince"],
                     Url = "select-province"
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["SelectCity"],
                     Url = "select-city"
                 },
@@ -733,7 +726,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["HikVision"],
                     Url = "hik-vision"
                 },
@@ -794,7 +786,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["OfficeViewer"],
                     Url = "office-viewer"
                 },
@@ -810,7 +801,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["PdfViewer"],
                     Url = "pdf-viewer"
                 },
@@ -881,7 +871,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["TaskDashBoard"],
                     Url = "task-board"
                 },
@@ -1321,7 +1310,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["NetworkMonitor"],
                     Url = "network-monitor"
                 },
@@ -1404,6 +1392,11 @@ internal static class MenusLocalizerExtensions
                 {
                     Text = Localizer["SweetAlert"],
                     Url = "sweet-alert"
+                },
+                new()
+                {
+                    Text = Localizer["Terms"],
+                    Url = "term"
                 },
                 new()
                 {
@@ -1529,7 +1522,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["Navbar"],
                     Url = "navbar"
                 },
@@ -1565,7 +1557,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["Toolbar"],
                     Url = "toolbar"
                 }
@@ -1624,7 +1615,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["Dom2ImageService"],
                     Url = "dom2image"
                 },
@@ -1695,7 +1685,6 @@ internal static class MenusLocalizerExtensions
                 },
                 new()
                 {
-                    IsNew = true,
                     Text = Localizer["OpcDaService"],
                     Url = "opc-da"
                 },

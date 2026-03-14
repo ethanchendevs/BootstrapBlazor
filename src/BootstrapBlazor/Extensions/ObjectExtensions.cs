@@ -19,7 +19,6 @@ public static class ObjectExtensions
     /// <para lang="en">Convert to string with unit [% px] => [% px] [int] => [int]px</para>
     /// </summary>
     /// <param name="val"></param>
-    /// <returns></returns>
     public static string ConvertToPercentString(this string? val)
     {
         var ret = "";
@@ -50,7 +49,6 @@ public static class ObjectExtensions
     /// <para lang="en">Check if it is a Number data type</para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static bool IsNumber(this Type t)
     {
         var targetType = Nullable.GetUnderlyingType(t) ?? t;
@@ -63,7 +61,6 @@ public static class ObjectExtensions
     /// <para lang="en">Check if it should be rendered as <see cref="BootstrapInputNumber{TValue}"/></para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static bool IsNumberWithDotSeparator(this Type t)
     {
         var separator = CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
@@ -79,7 +76,6 @@ public static class ObjectExtensions
     /// <para lang="en">Check if it is a Boolean data type</para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static bool IsBoolean(this Type t)
     {
         var targetType = Nullable.GetUnderlyingType(t) ?? t;
@@ -91,7 +87,6 @@ public static class ObjectExtensions
     /// <para lang="en">Check if it is a DateTime data type</para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static bool IsDateTime(this Type t)
     {
         var targetType = Nullable.GetUnderlyingType(t) ?? t;
@@ -104,7 +99,6 @@ public static class ObjectExtensions
     /// <para lang="en">Check if it is a TimeSpan data type</para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static bool IsTimeSpan(this Type t)
     {
         var targetType = Nullable.GetUnderlyingType(t) ?? t;
@@ -117,7 +111,6 @@ public static class ObjectExtensions
     /// <para lang="en">Get type description text by type</para>
     /// </summary>
     /// <param name="t"></param>
-    /// <returns></returns>
     public static string GetTypeDesc(this Type t)
     {
         string? ret;
@@ -145,7 +138,6 @@ public static class ObjectExtensions
     /// <para lang="zh">字符串类型转换为其他数据类型</para>
     /// <para lang="en">String type converted to other data types</para>
     /// </summary>
-    /// <returns></returns>
     public static bool TryConvertTo(this string? source, Type type, out object? val)
     {
         var ret = true;
@@ -168,13 +160,12 @@ public static class ObjectExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">Tries to convert the string representation of a value to a specified 类型.</para>
-    /// <para lang="en">Tries to convert the string representation of a value to a specified type.</para>
+    /// <para lang="zh">Tries to convert the string representation of a value to a specified 类型</para>
+    /// <para lang="en">Tries to convert the string representation of a value to a specified type</para>
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="source"></param>
     /// <param name="val"></param>
-    /// <returns></returns>
     public static bool TryConvertTo<TValue>(this string? source, [MaybeNullWhen(false)] out TValue val)
     {
         var ret = false;
@@ -217,7 +208,6 @@ public static class ObjectExtensions
     /// <para lang="en">Formats the file size into a string with appropriate units</para>
     /// </summary>
     /// <param name="fileSize"></param>
-    /// <returns></returns>
     public static string ToFileSizeString(this long fileSize) => fileSize switch
     {
         >= 1024 and < 1024 * 1024 => $"{Math.Round(fileSize / 1024D, 0, MidpointRounding.AwayFromZero)} KB",
@@ -251,8 +241,8 @@ public static class ObjectExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">Creates an 实例 of a 类型 and ensures all class-类型 properties are initialized.</para>
-    /// <para lang="en">Creates an instance of a type and ensures all class-type properties are initialized.</para>
+    /// <para lang="zh">Creates an 实例 of a 类型 and ensures all class-类型 properties are initialized</para>
+    /// <para lang="en">Creates an instance of a type and ensures all class-type properties are initialized</para>
     /// </summary>
     /// <typeparam name="TItem">The type to create an instance of.</typeparam>
     /// <param name="isAutoInitializeModelProperty">Whether to automatically initialize model properties default value is false.</param>
@@ -283,8 +273,8 @@ public static class ObjectExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">Ensures that all class-类型 properties of the 实例 are initialized.</para>
-    /// <para lang="en">Ensures that all class-type properties of the instance are initialized.</para>
+    /// <para lang="zh">Ensures that all class-类型 properties of the 实例 are initialized</para>
+    /// <para lang="en">Ensures that all class-type properties of the instance are initialized</para>
     /// </summary>
     /// <param name="isAutoInitializeModelProperty">Whether to automatically initialize model properties default value is false.</param>
     /// <param name="instance">The instance to initialize properties for.</param>

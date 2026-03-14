@@ -33,7 +33,6 @@ public class WebClientService(IIpLocatorFactory ipLocatorFactory,
     /// <para lang="zh">获得 ClientInfo 实例方法</para>
     /// <para lang="en">Get ClientInfo Instance Method</para>
     /// </summary>
-    /// <returns></returns>
     public async Task<ClientInfo> GetClientInfo()
     {
         _taskCompletionSource = new TaskCompletionSource();
@@ -83,11 +82,10 @@ public class WebClientService(IIpLocatorFactory ipLocatorFactory,
     }
 
     /// <summary>
-    /// <para lang="zh">Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</para>
-    /// <para lang="en">Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</para>
+    /// <para lang="zh">Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously</para>
+    /// <para lang="en">Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously</para>
     /// </summary>
     /// <param name="disposing"></param>
-    /// <returns></returns>
     protected virtual async ValueTask DisposeAsync(bool disposing)
     {
         if (disposing)
@@ -109,7 +107,6 @@ public class WebClientService(IIpLocatorFactory ipLocatorFactory,
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
     public async ValueTask DisposeAsync()
     {
         await DisposeAsync(true);
@@ -183,4 +180,10 @@ public class ClientInfo
     /// <para lang="en">Gets or sets Browser Engine Info</para>
     /// </summary>
     public string? Engine { get; set; }
+
+    /// <summary>
+    /// <para lang="zh">获得/设置 当前已登录用户账号</para>
+    /// <para lang="en">Gets or sets currently logged-in user account</para>
+    /// </summary>
+    public string? UserName { get; set; }
 }

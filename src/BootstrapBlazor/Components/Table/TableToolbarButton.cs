@@ -15,25 +15,24 @@ public class TableToolbarButton<TItem> : ButtonBase, ITableToolbarButton<TItem>
     /// <summary>
     /// <para lang="zh">获得/设置 按钮点击后回调委托</para>
     /// <para lang="en">Gets or sets button click callback delegate</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public Func<IEnumerable<TItem>, Task>? OnClickCallback { get; set; }
 
     /// <summary>
-    /// <inheritdoc/>
+    /// <inheritdoc cref="ITableToolbarButton{TItem}.IsEnableWhenSelectedOneRow"/>
     /// </summary>
     [Parameter]
     public bool IsEnableWhenSelectedOneRow { get; set; }
 
     /// <summary>
-    /// <inheritdoc/>
+    /// <inheritdoc cref="ITableToolbarButton{TItem}.IsDisabledCallback"/>
     /// </summary>
     [Parameter]
     public Func<IEnumerable<TItem>, bool>? IsDisabledCallback { get; set; }
 
     /// <summary>
-    /// <inheritdoc/>
+    /// <inheritdoc cref="IToolbarComponent.IsShow"/>
     /// </summary>
     [Parameter]
     public bool IsShow { get; set; } = true;
@@ -41,7 +40,6 @@ public class TableToolbarButton<TItem> : ButtonBase, ITableToolbarButton<TItem>
     /// <summary>
     /// <para lang="zh">获得/设置 Table Toolbar 实例</para>
     /// <para lang="en">Gets or sets Table Toolbar instance</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [CascadingParameter]
     protected TableToolbar<TItem>? Toolbar { get; set; }

@@ -99,7 +99,7 @@
   "BootstrapBlazor.Components.EqualToValidator": {
     "ErrorMessage": "Please enter the same value again"
   },
-  "BootstrapBlazor.Components.ErrorLogger": {
+  "BootstrapBlazor.Components.BootstrapBlazorErrorBoundary": {
     "ToastTitle": "Application Error"
   },
   "BootstrapBlazor.Components.GoTop": {
@@ -261,7 +261,9 @@
   },
   "BootstrapBlazor.Components.EditDialog": {
     "CloseButtonText": "Close",
-    "SaveButtonText": "Save"
+    "SaveButtonText": "Save",
+    "CloseConfirmTitle": "Warning",
+    "CloseConfirmContent": "The form has been changed. Are you sure you continue to close it?"
   },
   "BootstrapBlazor.Components.TableColumnFilter": {
     "ClearButtonText": "Clear",
@@ -395,7 +397,7 @@
     "DefaultRequiredErrorMessage": "{0} is required."
   },
   "BootstrapBlazor.Components.NetworkMonitorIndicator": {
-    "NTitle": "Network",
+    "Title": "Network",
     "NetworkType": "NetworkType",
     "Downlink": "Downlink",
     "RTT": "RTT"

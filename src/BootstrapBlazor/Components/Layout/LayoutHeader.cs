@@ -18,15 +18,14 @@ internal class LayoutHeader : IComponent
     /// <inheritdoc/>
     /// </summary>
     /// <param name="parameters"></param>
-    /// <returns></returns>
     Task IComponent.SetParametersAsync(ParameterView parameters)
     {
         return Task.CompletedTask;
     }
 
     /// <summary>
-    /// <para lang="zh">render tab header method.</para>
-    /// <para lang="en">render tab header method.</para>
+    /// <para lang="zh">render tab header method</para>
+    /// <para lang="en">render tab header method</para>
     /// </summary>
     public void Render(RenderFragment renderFragment)
     {

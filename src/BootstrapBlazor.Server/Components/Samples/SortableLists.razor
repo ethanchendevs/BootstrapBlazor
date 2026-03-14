@@ -1,4 +1,4 @@
-﻿@page "/sortable-list"
+@page "/sortable-list"
 @inject IStringLocalizer<SortableLists> Localizer
 @inject IStringLocalizer<Foo> FooLocalizer
 
@@ -268,4 +268,10 @@
     </div>
 </DemoBlock>
 
-<AttributeTable Items="@GetAttributes()" />
+<AttributeTable Type="typeof(SortableList)"></AttributeTable>
+
+<AttributeTable Type="typeof(SortableListItem)"></AttributeTable>
+
+<AttributeTable Type="typeof(SortableOption)"></AttributeTable>
+
+<AttributeTable Type="typeof(SortableEvent)"></AttributeTable>

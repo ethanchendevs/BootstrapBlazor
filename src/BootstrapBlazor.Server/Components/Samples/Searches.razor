@@ -1,6 +1,6 @@
-﻿@page "/search"
+@page "/search"
 @inject IStringLocalizer<Searches> Localizer
-@inject IStringLocalizer<Foo> LocalizerFoo
+@inject IStringLocalizer<Foo> FooLocalizer
 @inject IOptions<WebsiteOptions> WebsiteOption
 
 <h3>@Localizer["SearchesTitle"]</h3>
@@ -193,4 +193,4 @@ private async Task OnClickClear()
     </div>
 </DemoBlock>
 
-<AttributeTable Items="@GetAttributes()" />
+<AttributeTable Type="@typeof(Search<>)" />

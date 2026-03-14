@@ -1,4 +1,4 @@
-﻿@page "/transfer"
+@page "/transfer"
 @inject IStringLocalizer<Transfers> Localizer
 
 <h3>@Localizer["TransfersTitle"]</h3>
@@ -119,6 +119,4 @@
     <Transfer TValue="string" Items="@Items4" OnSetItemClass="SetItemClass" />
 </DemoBlock>
 
-<AttributeTable Items="@GetAttributes()" />
-
-<EventTable Items="@GetEvents()" />
+<AttributeTable Type="typeof(Transfer<>)" />

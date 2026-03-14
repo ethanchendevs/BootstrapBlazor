@@ -15,7 +15,7 @@
            Introduction="@Localizer["ButtonUploadIntro"]"
            Name="Normal">
     <section ignore>
-        <div class="row g-3">
+        <div class="row g-3" style="--bb-input-group-label-width: 186px;">
             <div class="col-12 col-sm-6 col-xl-3">
                 <BootstrapInputGroup>
                     <BootstrapInputGroupLabel DisplayText="IsDisabled"></BootstrapInputGroupLabel>
@@ -119,3 +119,5 @@
            Name="Base64">
     <CardUpload TValue="string" DefaultFileList="@Base64FormatFileList" ShowDownloadButton="false" ShowDeleteButton="false"></CardUpload>
 </DemoBlock>
+
+<AttributeTable Type="typeof(CardUpload<>)"></AttributeTable>

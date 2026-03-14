@@ -59,9 +59,18 @@ public class MenuItem : NodeItem
     /// <para lang="zh">带参数构造函数</para>
     /// <para lang="en">Parameterized Constructor</para>
     /// </summary>
-    /// <param name="text"><para lang="zh">显示文本</para><para lang="en">Display Text</para></param>
-    /// <param name="url"><para lang="zh">菜单地址</para><para lang="en">Menu Url</para></param>
-    /// <param name="icon"><para lang="zh">菜单图标</para><para lang="en">Menu Icon</para></param>
+    /// <param name="text">
+    ///  <para lang="zh">显示文本</para>
+    ///  <para lang="en">Display Text</para>
+    /// </param>
+    /// <param name="url">
+    ///  <para lang="zh">菜单地址</para>
+    ///  <para lang="en">Menu Url</para>
+    /// </param>
+    /// <param name="icon">
+    ///  <para lang="zh">菜单图标</para>
+    ///  <para lang="en">Menu Icon</para>
+    /// </param>
     public MenuItem(string text, string? url = null, string? icon = null)
     {
         Text = text;
@@ -99,7 +108,6 @@ public class MenuItem : NodeItem
     /// <para lang="zh">获得 所有子项集合</para>
     /// <para lang="en">Get All sub-items collection</para>
     /// </summary>
-    /// <returns></returns>
     public IEnumerable<MenuItem> GetAllSubItems() => Items.Concat(GetSubItems(Items));
 
     private static IEnumerable<MenuItem> GetSubItems(IEnumerable<MenuItem> items) => items.SelectMany(i => i.Items.Any() ? i.Items.Concat(GetSubItems(i.Items)) : i.Items);

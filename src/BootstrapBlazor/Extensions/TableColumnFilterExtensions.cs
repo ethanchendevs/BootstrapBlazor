@@ -16,7 +16,6 @@ public static class TableColumnFilterExtensions
     /// <para lang="en">Whether has filter</para>
     /// </summary>
     /// <param name="filter"></param>
-    /// <returns></returns>
     public static bool HasFilter(this TableColumnFilter? filter)
     {
         if (filter == null)
@@ -31,7 +30,6 @@ public static class TableColumnFilterExtensions
     /// <para lang="en">Whether is header row</para>
     /// </summary>
     /// <param name="filter"></param>
-    /// <returns></returns>
     public static bool IsHeaderRow(this TableColumnFilter? filter)
     {
         if (filter == null)
@@ -42,11 +40,10 @@ public static class TableColumnFilterExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">获得 the field key for the filter.</para>
-    /// <para lang="en">Gets the field key for the filter.</para>
+    /// <para lang="zh">获得 the field key for the filter</para>
+    /// <para lang="en">Gets the field key for the filter</para>
     /// </summary>
     /// <param name="filter"></param>
-    /// <returns></returns>
     public static string GetFieldKey(this TableColumnFilter? filter)
     {
         if (filter == null)
@@ -57,11 +54,10 @@ public static class TableColumnFilterExtensions
     }
 
     /// <summary>
-    /// <para lang="zh">获得 the filter title.</para>
-    /// <para lang="en">Gets the filter title.</para>
+    /// <para lang="zh">获得 the filter title</para>
+    /// <para lang="en">Gets the filter title</para>
     /// </summary>
     /// <param name="filter"></param>
-    /// <returns></returns>
     public static string GetFilterTitle(this TableColumnFilter? filter)
     {
         if (filter == null)

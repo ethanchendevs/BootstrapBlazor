@@ -59,8 +59,7 @@ public partial class Tooltip : ITooltip
 
     /// <summary>
     /// <para lang="zh">获得/设置 获取显示内容的异步回调方法，默认 null</para>
-    /// <para lang="en">Gets or sets the callback method to get display content asynchronously. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method to get display content asynchronously. Default is null</para>
     /// </summary>
     [Parameter]
     public Func<Task<string>>? GetTitleCallback { get; set; }
@@ -85,16 +84,14 @@ public partial class Tooltip : ITooltip
 
     /// <summary>
     /// <para lang="zh">获得/设置 位置，默认为 null</para>
-    /// <para lang="en">Gets or sets the placement. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the placement. Default is null</para>
     /// </summary>
     [Parameter]
     public string[]? FallbackPlacements { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 偏移量，默认为 null</para>
-    /// <para lang="en">Gets or sets the offset. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the offset. Default is null</para>
     /// </summary>
     [Parameter]
     public string? Offset { get; set; }
@@ -114,7 +111,6 @@ public partial class Tooltip : ITooltip
     /// <summary>
     /// <para lang="zh">获得/设置 子组件</para>
     /// <para lang="en">Gets or sets the child component</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -165,22 +161,20 @@ public partial class Tooltip : ITooltip
     /// <para lang="zh">显示 Tooltip 弹窗方法</para>
     /// <para lang="en">Shows the Tooltip popup</para>
     /// </summary>
-    /// <param name="delay"><para lang="zh">延时指定毫秒后显示弹窗，默认 null 不延时</para><para lang="en">Delay showing the popup for specified milliseconds. Default is null (no delay).</para></param>
+    /// <param name="delay"><para lang="zh">延时指定毫秒后显示弹窗，默认 null 不延时</para><para lang="en">Delay showing the popup for specified milliseconds. Default is null (no delay)</para></param>
     public Task Show(int? delay = null) => InvokeVoidAsync("show", Id, delay);
 
     /// <summary>
     /// <para lang="zh">关闭 Tooltip 弹窗方法</para>
     /// <para lang="en">Hides the Tooltip popup</para>
     /// </summary>
-    /// <param name="delay"><para lang="zh">延时指定毫秒后关闭弹窗，默认 null 不延时</para><para lang="en">Delay hiding the popup for specified milliseconds. Default is null (no delay).</para></param>
-    /// <returns></returns>
+    /// <param name="delay"><para lang="zh">延时指定毫秒后关闭弹窗，默认 null 不延时</para><para lang="en">Delay hiding the popup for specified milliseconds. Default is null (no delay)</para></param>
     public Task Hide(int? delay = null) => InvokeVoidAsync("hide", Id, delay);
 
     /// <summary>
     /// <para lang="zh">切换 Tooltip 弹窗当前状态方法</para>
     /// <para lang="en">Toggles the Tooltip popup state</para>
     /// </summary>
-    /// <param name="delay"><para lang="zh">延时指定毫秒后切换弹窗状态，默认 null 不延时</para><para lang="en">Delay toggling the popup state for specified milliseconds. Default is null (no delay).</para></param>
-    /// <returns></returns>
+    /// <param name="delay"><para lang="zh">延时指定毫秒后切换弹窗状态，默认 null 不延时</para><para lang="en">Delay toggling the popup state for specified milliseconds. Default is null (no delay)</para></param>
     public Task Toggle(int? delay = null) => InvokeVoidAsync("toggle", Id, delay);
 }

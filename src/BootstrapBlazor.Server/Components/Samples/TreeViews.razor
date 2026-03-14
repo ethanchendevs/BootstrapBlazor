@@ -1,6 +1,6 @@
 @page "/tree-view"
 @inject IStringLocalizer<TreeViews> Localizer
-@inject IStringLocalizer<Foo> LocalizerFoo
+@inject IStringLocalizer<Foo> FooLocalizer
 
 <h3>@Localizer["TreeViewsTitle"]</h3>
 <h4>@Localizer["TreeViewsDescription"]</h4>
@@ -216,6 +216,6 @@
     </TreeView>
 </DemoBlock>
 
-<AttributeTable Items="@GetAttributes()"></AttributeTable>
+<AttributeTable Type="typeof(TreeView<>)"></AttributeTable>
 
-<AttributeTable Items="@GetTreeItemAttributes()" Title="@Localizer["TreeViewsAttribute"]"></AttributeTable>
+<AttributeTable Type="typeof(TreeViewItem<TreeFoo>)" Title="@Localizer["TreeViewsAttribute"]"></AttributeTable>

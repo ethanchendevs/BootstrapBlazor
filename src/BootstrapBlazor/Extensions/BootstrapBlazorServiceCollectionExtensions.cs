@@ -22,7 +22,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="configureOptions"></param>
     /// <param name="localizationConfigure"></param>
-    /// <returns></returns>
     public static IServiceCollection AddBootstrapBlazor(this IServiceCollection services, Action<BootstrapBlazorOptions>? configureOptions = null, Action<JsonLocalizationOptions>? localizationConfigure = null)
     {
         services.AddMemoryCache();
@@ -70,11 +69,9 @@ public static class BootstrapBlazorServiceCollectionExtensions
         // <para lang="en">IP Locator Service</para>
         services.TryAddSingleton<IIpLocatorFactory, DefaultIpLocatorFactory>();
         services.AddSingleton<IIpLocatorProvider, BaiduIpLocatorProvider>();
-        services.AddSingleton<IIpLocatorProvider, BaiduIpLocatorProviderV2>();
 
 #if NET8_0_OR_GREATER
         services.AddKeyedSingleton<IIpLocatorProvider, BaiduIpLocatorProvider>(nameof(BaiduIpLocatorProvider));
-        services.AddKeyedSingleton<IIpLocatorProvider, BaiduIpLocatorProviderV2>(nameof(BaiduIpLocatorProviderV2));
 #endif
 
         // <para lang="zh">节日服务</para>
@@ -140,7 +137,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configureOptions"></param>
-    /// <returns></returns>
     private static IServiceCollection ConfigureBootstrapBlazorOption(this IServiceCollection services, Action<BootstrapBlazorOptions>? configureOptions = null)
     {
         services.AddOptionsMonitor<BootstrapBlazorOptions>();
@@ -181,8 +177,7 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="locatorAction"></param>
-    /// <returns></returns>
-    [Obsolete("已弃用 请删除即可")]
+    [Obsolete("已弃用 直接删除即可。Deprecated. Delete it directly.")]
     [ExcludeFromCodeCoverage]
     public static IServiceCollection ConfigureIPLocatorOption(this IServiceCollection services, Action<IPLocatorOption>? locatorAction = null)
     {
@@ -225,7 +220,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// <para lang="en">Add TabItem Bind Options Service</para>
     /// </summary>
     /// <param name="services"></param>
-    /// <returns></returns>
     static IServiceCollection AddTabItemBindOptions(this IServiceCollection services)
     {
         services.AddOptionsMonitor<TabItemBindOptions>();
@@ -238,7 +232,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configureOptions"></param>
-    /// <returns></returns>
     public static IServiceCollection ConfigureTabItemMenuBindOptions(this IServiceCollection services, Action<TabItemBindOptions> configureOptions)
     {
         services.Configure(configureOptions);
@@ -250,7 +243,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// <para lang="en">Add Icon Theme Options Service</para>
     /// </summary>
     /// <param name="services"></param>
-    /// <returns></returns>
     static IServiceCollection AddIconTheme(this IServiceCollection services)
     {
         services.TryAddSingleton<IIconTheme, DefaultIconTheme>();
@@ -264,7 +256,6 @@ public static class BootstrapBlazorServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configureOptions"></param>
-    /// <returns></returns>
     public static IServiceCollection ConfigureIconThemeOptions(this IServiceCollection services, Action<IconThemeOptions>? configureOptions = null)
     {
         if (configureOptions != null)

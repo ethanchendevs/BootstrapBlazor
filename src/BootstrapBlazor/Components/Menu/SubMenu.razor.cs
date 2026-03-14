@@ -8,8 +8,8 @@ using Microsoft.Extensions.Localization;
 namespace BootstrapBlazor.Components;
 
 /// <summary>
-/// <para lang="zh"></para>
-/// <para lang="en"></para>
+/// <para lang="zh">子菜单组件内部使用不推荐直接使用此组件</para>
+/// <para lang="en">SubMenu component for internal use only. Direct usage is not recommended.</para>
 /// </summary>
 public sealed partial class SubMenu
 {
@@ -33,7 +33,6 @@ public sealed partial class SubMenu
     /// <summary>
     /// <para lang="zh">获得/设置 组件数据源</para>
     /// <para lang="en">Gets or sets Component Data Source</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     [NotNull]
@@ -42,7 +41,6 @@ public sealed partial class SubMenu
     /// <summary>
     /// <para lang="zh">获得/设置 DropdownIcon 图标</para>
     /// <para lang="en">Gets or sets DropdownIcon Icon</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public string? DropdownIcon { get; set; }
@@ -50,7 +48,6 @@ public sealed partial class SubMenu
     /// <summary>
     /// <para lang="zh">获得/设置 菜单箭头图标</para>
     /// <para lang="en">Gets or sets Menu Arrow Icon</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public string? ArrowIcon { get; set; }
@@ -58,7 +55,6 @@ public sealed partial class SubMenu
     /// <summary>
     /// <para lang="zh">获得/设置 菜单项点击回调委托</para>
     /// <para lang="en">Gets or sets Menu item click callback delegate</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public Func<MenuItem, Task>? OnClick { get; set; }
@@ -71,23 +67,15 @@ public sealed partial class SubMenu
     [NotNull]
     private IStringLocalizer<Menu>? Localizer { get; set; }
 
-    /// <summary>
-    /// <para lang="zh">获得 样式字符串</para>
-    /// <para lang="en">Get Style String</para>
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
     private static string? GetClassString(MenuItem item) => CssBuilder.Default()
         .AddClass("active", !item.IsDisabled && item.IsActive)
         .AddClass("disabled", item.IsDisabled)
         .Build();
 
     /// <summary>
-    /// <para lang="zh">SetParametersAsync 方法</para>
-    /// <para lang="en">SetParametersAsync Method</para>
+    /// <inheritdoc/>
     /// </summary>
     /// <param name="parameters"></param>
-    /// <returns></returns>
     public override Task SetParametersAsync(ParameterView parameters)
     {
         parameters.SetParameterProperties(this);

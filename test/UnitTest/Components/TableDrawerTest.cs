@@ -20,6 +20,8 @@ public class TableDrawerTest : TableDialogTestBase
         {
             pb.AddChildContent<Table<Foo>>(pb =>
             {
+                pb.Add(a => a.CloseConfirmTitle, "close-confirm-title");
+                pb.Add(a => a.CloseConfirmContent, "close-confirm-content");
                 pb.Add(a => a.RenderMode, TableRenderMode.Table);
                 pb.Add(a => a.EditMode, EditMode.Drawer);
                 pb.Add(a => a.OnBeforeShowDrawer, new Func<DrawerOption, Task>(op =>
@@ -274,5 +276,14 @@ public class TableDrawerTest : TableDialogTestBase
         cut.WaitForAssertion(() => cut.Find(".fa-magnifying-glass"));
         queryButton = cut.Find(".fa-magnifying-glass");
         await cut.InvokeAsync(() => queryButton.Click());
+    }
+
+    [Fact]
+    public void TableEditDrawerOption_Ok()
+    {
+        var option = new TableEditDrawerOption<Foo>();
+        option.ShowLabel = false;
+
+        Assert.False(option.ShowLabel);
     }
 }

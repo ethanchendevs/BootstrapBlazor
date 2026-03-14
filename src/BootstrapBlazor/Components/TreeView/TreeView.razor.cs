@@ -26,7 +26,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示加载动画，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show the loading animation. Default is false.</para>
+    /// <para lang="en">Gets or sets whether to show the loading animation. Default is false</para>
     /// </summary>
     [Obsolete("Deprecated. Please remove it.")]
     [ExcludeFromCodeCoverage]
@@ -34,112 +34,98 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示树视图项的工具栏，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show the toolbar of tree view item. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show the toolbar of tree view item. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowToolbar { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 确定是否显示树视图项工具栏的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method that determines whether to show the toolbar of the tree view item.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method that determines whether to show the toolbar of the tree view item</para>
     /// </summary>
     [Parameter]
     public Func<TreeViewItem<TItem>, Task<bool>>? ShowToolbarCallback { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 整个组件是否被禁用，默认为 false</para>
-    /// <para lang="en">Gets or sets whether the entire component is disabled. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether the entire component is disabled. Default is false</para>
     /// </summary>
     [Parameter]
     public bool IsDisabled { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 组件被禁用时，节点是否可以展开或折叠，默认为 false</para>
-    /// <para lang="en">Gets or sets whether nodes can be expanded or collapsed when the component is disabled. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether nodes can be expanded or collapsed when the component is disabled. Default is false</para>
     /// </summary>
     [Parameter]
     public bool CanExpandWhenDisabled { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 树视图是否具有手风琴行为，默认为 false。虚拟滚动模式不支持手风琴行为。</para>
-    /// <para lang="en">Gets or sets whether the tree view has accordion behavior. Default is false. Accordion behavior is not supported in virtual scrolling mode.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 树视图是否具有手风琴行为，默认为 false。虚拟滚动模式不支持手风琴行为</para>
+    /// <para lang="en">Gets or sets whether the tree view has accordion behavior. Default is false. Accordion behavior is not supported in virtual scrolling mode</para>
     /// </summary>
     [Parameter]
     public bool IsAccordion { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 点击节点是否展开或折叠其子节点，默认为 false</para>
-    /// <para lang="en">Gets or sets whether clicking a node expands or collapses its children. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether clicking a node expands or collapses its children. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ClickToggleNode { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 点击节点是否切换其复选框状态，默认为 false。仅在 ShowCheckbox 为 true 时有效。</para>
-    /// <para lang="en">Gets or sets whether clicking a node toggles its checkbox state. Default is false. Effective when ShowCheckbox is true.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 点击节点是否切换其复选框状态，默认为 false。仅在 ShowCheckbox 为 true 时有效</para>
+    /// <para lang="en">Gets or sets whether clicking a node toggles its checkbox state. Default is false. Effective when ShowCheckbox is true</para>
     /// </summary>
     [Parameter]
     public bool ClickToggleCheck { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示加载骨架，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show the loading skeleton. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show the loading skeleton. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowSkeleton { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示搜索栏，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show the search bar. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show the search bar. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowSearch { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示重置搜索按钮，默认为 true</para>
-    /// <para lang="en">Gets or sets whether to show the reset search button. Default is true.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show the reset search button. Default is true</para>
     /// </summary>
     [Parameter]
     public bool ShowResetSearchButton { get; set; } = true;
 
     /// <summary>
     /// <para lang="zh">获得/设置 搜索栏模板，默认为 null</para>
-    /// <para lang="en">Gets or sets the search bar template. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the search bar template. Default is null</para>
     /// </summary>
     [Parameter]
     public RenderFragment? SearchTemplate { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 搜索图标，默认未设置，使用内置主题图标</para>
-    /// <para lang="en">Gets or sets the search icon. Default is not set, using the built-in theme icon.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the search icon. Default is not set, using the built-in theme icon</para>
     /// </summary>
     [Parameter]
     public string? SearchIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 清除搜索图标，默认未设置，使用内置主题图标</para>
-    /// <para lang="en">Gets or sets the clear search icon. Default is not set, using the built-in theme icon.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the clear search icon. Default is not set, using the built-in theme icon</para>
     /// </summary>
     [Parameter]
     public string? ClearSearchIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 搜索回调方法，默认为 null</para>
-    /// <para lang="en">Gets or sets the search callback method. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the search callback method. Default is null</para>
     /// </summary>
     /// <remarks>Enabled by setting <see cref="ShowSearch"/> to true.</remarks>
     [Parameter]
@@ -147,8 +133,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 分层数据集合</para>
-    /// <para lang="en">Gets or sets the hierarchical data collection.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the hierarchical data collection</para>
     /// </summary>
     [Parameter]
     [NotNull]
@@ -156,144 +141,134 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示复选框，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show checkboxes. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show checkboxes. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowCheckbox { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 最多选中项数</para>
-    /// <para lang="en">Gets or sets the maximum number of selected items.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the maximum number of selected items</para>
     /// </summary>
     [Parameter]
     public int MaxSelectedCount { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 超过最多选中项数时的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method when the maximum number of selected items is exceeded.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method when the maximum number of selected items is exceeded</para>
     /// </summary>
     [Parameter]
     public Func<Task>? OnMaxSelectedCountExceed { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否显示图标，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to show icons. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to show icons. Default is false</para>
     /// </summary>
     [Parameter]
     public bool ShowIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 树项被点击时的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method when a tree item is clicked.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method when a tree item is clicked</para>
     /// </summary>
     [Parameter]
     public Func<TreeViewItem<TItem>, Task>? OnTreeItemClick { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 点击节点前的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method before a tree item is clicked.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method before a tree item is clicked</para>
     /// </summary>
     [Parameter]
     public Func<TreeViewItem<TItem>, Task<bool>>? OnBeforeTreeItemClick { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 树项被选中时的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method when a tree item is checked.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method when a tree item is checked</para>
     /// </summary>
     [Parameter]
     public Func<List<TreeViewItem<TItem>>, Task>? OnTreeItemChecked { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 节点展开时获取子数据的回调方法</para>
-    /// <para lang="en">Gets or sets the callback method to get child data when a node is expanded.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the callback method to get child data when a node is expanded</para>
     /// </summary>
     [Parameter]
     public Func<TreeViewItem<TItem>, Task<IEnumerable<TreeViewItem<TItem>>>>? OnExpandNodeAsync { get; set; }
 
     /// <summary>
-    /// <inheritdoc/>
-    /// <para><version>10.2.2</version></para>
+    /// <inheritdoc cref="IModelEqualityComparer{TItem}.CustomKeyAttribute"/>
     /// </summary>
     [Parameter]
     public Type CustomKeyAttribute { get; set; } = typeof(KeyAttribute);
 
     /// <summary>
-    /// <inheritdoc/>
-    /// <para><version>10.2.2</version></para>
+    /// <inheritdoc cref="IModelEqualityComparer{TItem}.ModelEqualityComparer"/>
     /// </summary>
     [Parameter]
     public Func<TItem, TItem, bool>? ModelEqualityComparer { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 树节点的加载图标</para>
-    /// <para lang="en">Gets or sets the loading icon for tree nodes.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the loading icon for tree nodes</para>
     /// </summary>
     [Parameter]
     public string? LoadingIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 树节点的图标</para>
-    /// <para lang="en">Gets or sets the icon for tree nodes.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the icon for tree nodes</para>
     /// </summary>
     [Parameter]
     public string? NodeIcon { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 展开状态的树节点图标</para>
-    /// <para lang="en">Gets or sets the icon for expanded tree nodes.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the icon for expanded tree nodes</para>
     /// </summary>
     [Parameter]
     public string? ExpandNodeIcon { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 是否启用键盘导航，默认为 false。 <para>ArrowLeft 收缩节点。</para>
-    /// <para>ArrowRight 展开节点。</para>
-    /// <para>ArrowUp 移动到上一个节点。</para>
-    /// <para>ArrowDown 移动到下一个节点。</para>
-    /// <para>Space 选择当前节点。</para>
+    /// <para lang="zh">获得/设置 是否启用键盘导航，默认为 false。 <para>ArrowLeft 收缩节点</para>
+    /// <para>ArrowRight 展开节点</para>
+    /// <para>ArrowUp 移动到上一个节点</para>
+    /// <para>ArrowDown 移动到下一个节点</para>
+    /// <para>Space 选择当前节点</para>
     ///</para>
-    /// <para lang="en">Gets or sets whether to enable keyboard navigation. Default is false. <para>ArrowLeft collapses the node.</para>
-    /// <para>ArrowRight expands the node.</para>
-    /// <para>ArrowUp moves to the previous node.</para>
-    /// <para>ArrowDown moves to the next node.</para>
-    /// <para>Space selects the current node.</para>
+    /// <para lang="en">Gets or sets whether to enable keyboard navigation. Default is false. <para>ArrowLeft collapses the node</para>
+    /// <para>ArrowRight expands the node</para>
+    /// <para>ArrowUp moves to the previous node</para>
+    /// <para>ArrowDown moves to the next node</para>
+    /// <para>Space selects the current node</para>
     ///</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public bool EnableKeyboard { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 键盘导航时的滚动至视图选项，默认为 null，使用 { behavior: "smooth", block: "nearest", inline: "start" }。</para>
-    /// <para lang="en">Gets or sets the scroll into view options for keyboard navigation. Default is null, using { behavior: "smooth", block: "nearest", inline: "start" }.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 是否将 active 选中节点自动滚动到可视状态</para>
+    /// <para lang="en">Gets or sets whether to automatically scroll the active selected node into the visible state.</para>
+    /// </summary>
+    [Parameter]
+    public bool IsAutoScrollIntoView { get; set; }
+
+    /// <summary>
+    /// <para lang="zh">获得/设置 键盘导航时的滚动至视图选项，默认为 null，使用 { behavior: "smooth", block: "nearest", inline: "start" }</para>
+    /// <para lang="en">Gets or sets the scroll into view options for keyboard navigation. Default is null, using { behavior: "smooth", block: "nearest", inline: "start" }</para>
     /// </summary>
     [Parameter]
     public ScrollIntoViewOptions? ScrollIntoViewOptions { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 是否启用虚拟滚动，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to enable virtual scrolling. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to enable virtual scrolling. Default is false</para>
     /// </summary>
     [Parameter]
     public bool IsVirtualize { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 虚拟滚动时的行高，默认为 29f</para>
-    /// <para lang="en">Gets or sets the row height for virtual scrolling. Default is 29f.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the row height for virtual scrolling. Default is 29f</para>
     /// </summary>
     /// <remarks>Effective when <see cref="IsVirtualize"/> is set to true.</remarks>
     [Parameter]
@@ -301,8 +276,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 虚拟滚动时的超扫描计数，默认为 10</para>
-    /// <para lang="en">Gets or sets the overscan count for virtual scrolling. Default is 10.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the overscan count for virtual scrolling. Default is 10</para>
     /// </summary>
     /// <remarks>Effective when <see cref="IsVirtualize"/> is set to true.</remarks>
     [Parameter]
@@ -310,48 +284,42 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
 
     /// <summary>
     /// <para lang="zh">获得/设置 工具栏内容模板，默认为 null</para>
-    /// <para lang="en">Gets or sets the toolbar content template. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the toolbar content template. Default is null</para>
     /// </summary>
     [Parameter]
     public RenderFragment<TItem>? ToolbarTemplate { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 弹出窗口标题，默认为 null</para>
-    /// <para lang="en">Gets or sets the title of the popup-window. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the title of the popup-window. Default is null</para>
     /// </summary>
     [Parameter]
     public string? ToolbarEditTitle { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 弹出窗口标签文本，默认为 null</para>
-    /// <para lang="en">Gets or sets the title of the popup-window. Default is null.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets the title of the popup-window. Default is null</para>
     /// </summary>
     [Parameter]
     public string? ToolbarEditLabelText { get; set; }
 
     /// <summary>
-    /// <para lang="zh">获得/设置 更新树文本值的回调，默认为 null. 如果返回 true 则更新树文本值，否则不更新。</para>
-    /// <para lang="en">Gets or sets the update the tree text value callback. Default is null. If return true will update the tree text value, otherwise will not update.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="zh">获得/设置 更新树文本值的回调，默认为 null. 如果返回 true 则更新树文本值，否则不更新</para>
+    /// <para lang="en">Gets or sets the update the tree text value callback. Default is null. If return true will update the tree text value, otherwise will not update</para>
     /// </summary>
     [Parameter]
     public Func<TItem, string?, Task<bool>>? OnUpdateCallbackAsync { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 节点状态变化时是否自动更新子节点，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to automatically update child nodes when the node state changes. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to automatically update child nodes when the node state changes. Default is false</para>
     /// </summary>
     [Parameter]
     public bool AutoCheckChildren { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 节点状态变化时是否自动更新父节点，默认为 false</para>
-    /// <para lang="en">Gets or sets whether to automatically update parent nodes when the node state changes. Default is false.</para>
-    /// <para><version>10.2.2</version></para>
+    /// <para lang="en">Gets or sets whether to automatically update parent nodes when the node state changes. Default is false</para>
     /// </summary>
     [Parameter]
     public bool AutoCheckParent { get; set; }
@@ -359,7 +327,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <summary>
     /// <para lang="zh">获得/设置 是否允许拖放操作，默认为 false</para>
     /// <para lang="en">Gets or sets a value indicating whether drag-and-drop operations are allowed. Default is false</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public bool AllowDrag { get; set; }
@@ -367,7 +334,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <summary>
     /// <para lang="zh">获得/设置 拖动标签页结束回调方法</para>
     /// <para lang="en">Gets or sets 拖动标签页结束callback method</para>
-    /// <para><version>10.2.2</version></para>
     /// </summary>
     [Parameter]
     public Func<TreeViewDragContext<TItem>, Task>? OnDragItemEndAsync { get; set; }
@@ -391,6 +357,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     private string? _searchText;
     private bool _shouldRender = true;
     private bool _init;
+    private bool _scrollIntoView = false;
 
     /// <summary>
     /// <inheritdoc/>
@@ -422,7 +389,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
     protected override async Task OnParametersSetAsync()
     {
         _rows = null;
@@ -452,6 +418,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
                 _activeItem ??= Items.FirstOrDefaultActiveItem();
                 _activeItem?.SetParentExpand<TreeViewItem<TItem>, TItem>(true);
                 _init = true;
+                _scrollIntoView = true;
             }
         }
     }
@@ -460,13 +427,13 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <inheritdoc/>
     /// </summary>
     /// <param name="firstRender"></param>
-    /// <returns></returns>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
         if (_keyboardArrowUpDownTrigger)
         {
+            _scrollIntoView = false;
             _keyboardArrowUpDownTrigger = false;
             await InvokeVoidAsync("scroll", Id, ScrollIntoViewOptions);
         }
@@ -475,18 +442,22 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
         {
             await InvokeVoidAsync("resetTreeViewRow", Id);
         }
+
+        if (IsAutoScrollIntoView && _scrollIntoView)
+        {
+            _scrollIntoView = false;
+            await InvokeVoidAsync("scroll", Id, ScrollIntoViewOptions);
+        }
     }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
     protected override bool ShouldRender() => _shouldRender;
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
     protected override Task InvokeInitAsync() => InvokeVoidAsync("init", Id, new
     {
         Invoke = Interop,
@@ -502,7 +473,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <para lang="en">Client-side user keyboard operation handler method called by JavaScript</para>
     /// </summary>
     /// <param name="key"></param>
-    /// <returns></returns>
     [JSInvokable]
     public async ValueTask TriggerKeyDown(string key)
     {
@@ -523,8 +493,8 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     }
 
     /// <summary>
-    /// <para lang="zh">Triggers the end of a drag-and-drop operation within the tree view.</para>
-    /// <para lang="en">Triggers the end of a drag-and-drop operation within the tree view.</para>
+    /// <para lang="zh">Triggers the end of a drag-and-drop operation within the tree view</para>
+    /// <para lang="en">Triggers the end of a drag-and-drop operation within the tree view</para>
     /// </summary>
     /// <remarks>This method is invoked via JavaScript interop to signal the completion of a drag-and-drop
     /// action. If a handler is assigned to <see cref="OnDragItemEndAsync"/>, it will be invoked with the drag
@@ -532,7 +502,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <param name="originIndex">The zero-based index of the item being dragged from its original position.</param>
     /// <param name="currentIndex">The zero-based index of the item's current position after the drag operation.</param>
     /// <param name="isChildren">A value indicating whether the drag operation involves child items.</param>
-    /// <returns></returns>
     [JSInvokable]
     public async ValueTask TriggerDragEnd(int originIndex, int currentIndex, bool isChildren)
     {
@@ -552,7 +521,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <para lang="en">Client-side method to query the state of the specified row checkbox, called by JavaScript</para>
     /// </summary>
     /// <param name="items"></param>
-    /// <returns></returns>
     [JSInvokable]
     public Task<List<CheckboxState>> GetParentsState(List<int> items)
     {
@@ -751,6 +719,7 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     {
         _activeItem = item;
         _activeItem?.SetParentExpand<TreeViewItem<TItem>, TItem>(true);
+        _scrollIntoView = true;
         StateHasChanged();
     }
 
@@ -885,7 +854,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// <para lang="zh">获得 all selected node 集合s</para>
     /// <para lang="en">Gets all selected node collections</para>
     /// </summary>
-    /// <returns></returns>
     public IEnumerable<TreeViewItem<TItem>> GetCheckedItems() => Items.Aggregate(new List<TreeViewItem<TItem>>(), (t, item) =>
     {
         t.Add(item);
@@ -899,7 +867,6 @@ public partial class TreeView<TItem> : IModelEqualityComparer<TItem>
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    /// <returns></returns>
     public bool Equals(TItem? x, TItem? y) => this.Equals<TItem>(x, y);
 
     private List<TreeViewItem<TItem>>? _rows = null;
