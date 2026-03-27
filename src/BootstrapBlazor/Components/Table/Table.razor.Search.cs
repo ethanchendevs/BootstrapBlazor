@@ -94,8 +94,8 @@ public partial class Table<TItem>
     public bool ShowSearchButton { get; set; } = true;
 
     /// <summary>
-    /// <para lang="zh">获得/设置 是否显示高级搜索按钮，默认值为 true</para>
-    /// <para lang="en">Gets or sets Whether to show advanced search button. Default true. <see cref="ShowSearch" /></para>
+    /// <para lang="zh">获得/设置 是否显示高级搜索按钮，默认值为 true 设置 <see cref="SearchMode.Popup" /> 时生效</para>
+    /// <para lang="en">Gets or sets Whether to show advanced search button. Default true. Effective when <see cref="SearchMode"/> is set to Popup</para>
     /// </summary>
     [Parameter]
     public bool ShowAdvancedSearch { get; set; } = true;
@@ -113,6 +113,27 @@ public partial class Table<TItem>
     /// </summary>
     [Parameter]
     public SearchMode SearchMode { get; set; }
+
+    /// <summary>
+    /// <para lang="zh">获得/设置 是否使用搜索表单 默认为 false 开启本功能后 CustomerSearchTemplate 与 SearchTemplate 均不生效</para>
+    /// <para lang="en">Gets or sets Whether to use search form. Default false. When enabled, both CustomerSearchTemplate and SearchTemplate are disabled</para>
+    /// </summary>
+    [Parameter]
+    public bool UseSearchForm { get; set; }
+
+    /// <summary>
+    /// <para lang="zh">获得/设置 搜索表单项集合</para>
+    /// <para lang="en">Gets or sets Search Form Items collection</para>
+    /// </summary>
+    [Parameter]
+    public IEnumerable<ISearchItem>? SearchItems { get; set; }
+
+    /// <summary>
+    /// <para lang="zh">获得/设置 搜索表单本地化配置项</para>
+    /// <para lang="en">Gets or sets Search Form Localization Options</para>
+    /// </summary>
+    [Parameter]
+    public SearchFormLocalizerOptions? SearchFormLocalizerOptions { get; set; }
 
     /// <summary>
     /// <para lang="zh">获得/设置 每行显示组件数量 默认为 2</para>
@@ -142,6 +163,39 @@ public partial class Table<TItem>
     [Parameter]
     public Func<TItem, Task>? OnResetSearchAsync { get; set; }
 
+    private FilterKeyValueAction? _searchFilter;
+    private List<ISearchItem>? _searchItems;
+    private FilterKeyValueAction? _advanceSearchFilter;
+
+    private List<ISearchItem> SearchFormItems
+    {
+        get
+        {
+            _searchItems ??= GetSearchFormItems();
+            return _searchItems;
+        }
+    }
+
+    private List<ISearchItem> GetSearchFormItems()
+    {
+        if (SearchItems != null)
+        {
+            return SearchItems.ToList();
+        }
+
+        if (SearchFormLocalizerOptions is null)
+        {
+            SearchFormLocalizerOptions = SearchFormLocalizer.GetSearchFormLocalizerOptions();
+        }
+        return GetSearchColumns().Select(i => i.ParseSearchItem(SearchFormLocalizerOptions.Value)).ToList();
+    }
+
+    private Task OnSearchFormFilterChanged(FilterKeyValueAction action)
+    {
+        _searchFilter = action;
+        return Task.CompletedTask;
+    }
+
     /// <summary>
     /// <para lang="zh">重置查询方法</para>
     /// <para lang="en">Reset Search Method</para>
@@ -149,7 +203,22 @@ public partial class Table<TItem>
     protected async Task ResetSearchClick()
     {
         await ToggleLoading(true);
-        if (CustomerSearchModel != null)
+        if (UseSearchForm)
+        {
+            _searchFilter = null;
+            _advanceSearchFilter = null;
+
+            // 重置 SearchItems 中的搜索条件值
+            if (_searchItems != null)
+            {
+                foreach (var item in _searchItems)
+                {
+                    item.Reset();
+                }
+            }
+            _searchItems = null;
+        }
+        else if (CustomerSearchModel != null)
         {
             CustomerSearchModel.Reset();
         }
@@ -214,7 +283,11 @@ public partial class Table<TItem>
     /// </summary>
     protected async Task ShowSearchDialog()
     {
-        if (CustomerSearchModel != null && CustomerSearchTemplate != null)
+        if (UseSearchForm)
+        {
+            await DialogService.ShowSearchDialog(CreateSearchFormDialog());
+        }
+        else if (CustomerSearchModel != null && CustomerSearchTemplate != null)
         {
             await DialogService.ShowSearchDialog(CreateCustomerModelDialog());
         }
@@ -222,6 +295,48 @@ public partial class Table<TItem>
         {
             await DialogService.ShowSearchDialog(CreateModelDialog());
         }
+
+        SearchDialogOption<ITableSearchModel> CreateCustomerModelDialog() => new()
+        {
+            IsScrolling = ScrollingDialogContent,
+            Title = SearchModalTitle,
+            Model = CustomerSearchModel,
+            DialogBodyTemplate = CustomerSearchTemplate,
+            OnResetSearchClick = ResetSearchClick,
+            OnSearchClick = SearchClick,
+            RowType = SearchDialogRowType,
+            ItemsPerRow = SearchDialogItemsPerRow,
+            Size = SearchDialogSize,
+            LabelAlign = SearchDialogLabelAlign,
+            IsDraggable = SearchDialogIsDraggable,
+            ShowMaximizeButton = SearchDialogShowMaximizeButton,
+            ShowUnsetGroupItemsOnTop = ShowUnsetGroupItemsOnTop
+        };
+
+        SearchDialogOption<TItem> CreateSearchFormDialog() => new()
+        {
+            Class = "modal-dialog-table modal-dialog-search-form",
+            IsScrolling = ScrollingDialogContent,
+            Title = SearchModalTitle,
+            DialogBodyTemplate = SearchTemplate,
+            OnResetSearchClick = ResetSearchClick,
+            OnSearchClick = SearchClick,
+            RowType = SearchDialogRowType,
+            ItemsPerRow = SearchDialogItemsPerRow,
+            LabelAlign = SearchDialogLabelAlign,
+            Size = SearchDialogSize,
+            IsDraggable = SearchDialogIsDraggable,
+            ShowMaximizeButton = SearchDialogShowMaximizeButton,
+            ShowUnsetGroupItemsOnTop = ShowUnsetGroupItemsOnTop,
+            SearchFormLocalizerOptions = SearchFormLocalizerOptions,
+            UseSearchForm = true,
+            SearchItems = SearchFormItems,
+            OnFilterChanged = action =>
+            {
+                _advanceSearchFilter = action;
+                return Task.CompletedTask;
+            }
+        };
 
         SearchDialogOption<TItem> CreateModelDialog() => new()
         {
@@ -240,22 +355,6 @@ public partial class Table<TItem>
             IsDraggable = SearchDialogIsDraggable,
             ShowMaximizeButton = SearchDialogShowMaximizeButton,
             ShowUnsetGroupItemsOnTop = ShowUnsetGroupItemsOnTop
-        };
-
-        SearchDialogOption<ITableSearchModel> CreateCustomerModelDialog() => new()
-        {
-            IsScrolling = ScrollingDialogContent,
-            Title = SearchModalTitle,
-            Model = CustomerSearchModel,
-            DialogBodyTemplate = CustomerSearchTemplate,
-            OnResetSearchClick = ResetSearchClick,
-            OnSearchClick = SearchClick,
-            RowType = SearchDialogRowType,
-            ItemsPerRow = SearchDialogItemsPerRow,
-            Size = SearchDialogSize,
-            LabelAlign = SearchDialogLabelAlign,
-            IsDraggable = SearchDialogIsDraggable,
-            ShowMaximizeButton = SearchDialogShowMaximizeButton
         };
     }
 
@@ -280,8 +379,13 @@ public partial class Table<TItem>
     /// </summary>
     protected List<IFilterAction> GetAdvanceSearches()
     {
+        if (UseSearchForm)
+        {
+            return _advanceSearchFilter.ToSearches();
+        }
+
         var searches = new List<IFilterAction>();
-        if (ShowAdvancedSearch && CustomerSearchModel == null)
+        if (ShowAdvancedSearch && SearchMode == SearchMode.Popup && CustomerSearchModel == null)
         {
             var callback = GetAdvancedSearchFilterCallback ?? new Func<PropertyInfo, TItem, List<SearchFilterAction>?>((p, model) =>
             {
@@ -311,7 +415,9 @@ public partial class Table<TItem>
     /// <para lang="zh">通过列集合中的 <see cref="ITableColumn.Searchable"/> 列与 <see cref="SearchText"/> 拼装 IFilterAction 集合</para>
     /// <para lang="en">Assemble IFilterAction collection using <see cref="ITableColumn.Searchable"/> columns and <see cref="SearchText"/></para>
     /// </summary>
-    protected List<IFilterAction> GetSearches() => Columns.Where(col => col.GetSearchable()).ToSearches(SearchText);
+    protected List<IFilterAction> GetSearches() => UseSearchForm
+        ? _searchFilter.ToSearches()
+        : Columns.Where(col => col.GetSearchable()).ToSearches(SearchText);
 
     /// <summary>
     /// <para lang="zh">点击重置搜索按钮时调用此方法</para>

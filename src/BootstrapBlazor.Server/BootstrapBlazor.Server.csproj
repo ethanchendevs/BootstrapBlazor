@@ -46,7 +46,7 @@
     <PackageReference Include="BootstrapBlazor.HikVision" Version="10.0.10" />
     <PackageReference Include="BootstrapBlazor.Holiday" Version="10.0.1" />
     <PackageReference Include="BootstrapBlazor.Html2Image" Version="10.0.0" />
-    <PackageReference Include="BootstrapBlazor.Html2Pdf" Version="10.0.5" />
+    <PackageReference Include="BootstrapBlazor.Html2Pdf" Version="10.0.6" />
     <PackageReference Include="BootstrapBlazor.IconPark" Version="10.0.0" />
     <PackageReference Include="BootstrapBlazor.ImageCropper" Version="10.0.0" />
     <PackageReference Include="BootstrapBlazor.IP2Region" Version="10.0.1" />
@@ -68,7 +68,7 @@
     <PackageReference Include="BootstrapBlazor.PdfViewer" Version="10.0.1" />
     <PackageReference Include="BootstrapBlazor.Player" Version="10.0.1" />
     <PackageReference Include="BootstrapBlazor.RDKit" Version="10.0.0" />
-    <PackageReference Include="BootstrapBlazor.Region" Version="10.0.2" />
+    <PackageReference Include="BootstrapBlazor.Region" Version="10.0.3" />
     <PackageReference Include="BootstrapBlazor.SignaturePad" Version="10.0.0" />
     <PackageReference Include="BootstrapBlazor.SmilesDrawer" Version="10.0.0" />
     <PackageReference Include="BootstrapBlazor.Sortable" Version="10.0.2" />

@@ -1098,7 +1098,15 @@
                 </div>
             </HeaderTemplate>
             <BodyTemplate>
-                @if (CustomerSearchModel != null && CustomerSearchTemplate != null)
+                @if (UseSearchForm)
+                {
+                    <SearchForm Items="SearchFormItems" RowType="SearchDialogRowType" ItemsPerRow="SearchDialogItemsPerRow"
+                                LabelAlign="SearchDialogLabelAlign" ShowLabel="true" ShowUnsetGroupItemsOnTop="ShowUnsetGroupItemsOnTop"
+                                SearchFormLocalizerOptions="SearchFormLocalizerOptions"
+                                OnChanged="OnSearchFormFilterChanged">
+                    </SearchForm>
+                }
+                else if (CustomerSearchModel != null && CustomerSearchTemplate != null)
                 {
                     @CustomerSearchTemplate(CustomerSearchModel)
                 }

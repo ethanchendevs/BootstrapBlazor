@@ -87,6 +87,7 @@ public class InternalTableColumnTest
         SetValue("IsRequiredWhenEdit", true);
         SetValue("LookupService", null);
         SetValue("IgnoreWhenExport", true);
+        SetValue("SearchFormItemMetadata", new StringSearchMetadata());
 
         void SetValue(string propertyName, object? val) => type!.GetProperty(propertyName)!.SetValue(instance, val);
     }

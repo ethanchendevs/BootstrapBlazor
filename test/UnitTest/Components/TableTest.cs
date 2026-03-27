@@ -472,6 +472,34 @@ public class TableTest : BootstrapBlazorTestBase
     }
 
     [Fact]
+    public async Task GetAdvanceSearches_OK()
+    {
+        var localizer = Context.Services.GetRequiredService<IStringLocalizer<Foo>>();
+        var searchModel = new Foo() { Name = "test" };
+        var cut = Context.Render<BootstrapBlazorRoot>(pb =>
+        {
+            pb.AddChildContent<Table<Foo>>(pb =>
+            {
+                pb.Add(a => a.ShowToolbar, true);
+                pb.Add(a => a.ShowSearch, true);
+                pb.Add(a => a.SearchModel, searchModel);
+                pb.Add(a => a.CustomerSearchTemplate, foo => builder => builder.AddContent(0, "test_CustomerSearchTemplate"));
+                pb.Add(a => a.ShowAdvancedSearch, true);
+                pb.Add(a => a.SearchMode, SearchMode.Popup);
+                pb.Add(a => a.OnQueryAsync, OnQueryAsync(localizer));
+                pb.Add(a => a.TableColumns, foo => builder =>
+                {
+                    builder.OpenComponent<TableColumn<Foo, string>>(0);
+                    builder.AddAttribute(1, "Field", foo.Name);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, "Name", typeof(string)));
+                    builder.AddAttribute(3, "Searchable", true);
+                    builder.CloseComponent();
+                });
+            });
+        });
+    }
+
+    [Fact]
     public async Task ShowTopSearch_Ok()
     {
         var localizer = Context.Services.GetRequiredService<IStringLocalizer<Foo>>();
@@ -544,6 +572,143 @@ public class TableTest : BootstrapBlazorTestBase
             pb.Add(a => a.CollapsedTopSearch, false);
         });
         cut.Contains("card-body collapse show");
+    }
+
+    [Fact]
+    public async Task UseSearchForm_Ok()
+    {
+        var localizer = Context.Services.GetRequiredService<IStringLocalizer<Foo>>();
+        var cut = Context.Render<BootstrapBlazorRoot>(pb =>
+        {
+            pb.AddChildContent<Table<Foo>>(pb =>
+            {
+                pb.Add(a => a.RenderMode, TableRenderMode.Table);
+                pb.Add(a => a.ShowToolbar, true);
+                pb.Add(a => a.ShowSearch, true);
+                pb.Add(a => a.UseSearchForm, true);
+                pb.Add(a => a.SearchMode, SearchMode.Top);
+                pb.Add(a => a.OnQueryAsync, OnQueryAsync(localizer));
+                pb.Add(a => a.TableColumns, foo => builder =>
+                {
+                    builder.OpenComponent<TableColumn<Foo, string>>(0);
+                    builder.AddAttribute(1, "Field", "");
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, "Name", typeof(string)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, DateTime?>>(0);
+                    builder.AddAttribute(1, "Field", DateTime.Today);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.DateTime), typeof(DateTime?)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, int>>(10);
+                    builder.AddAttribute(1, "Field", 0);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, "Count", typeof(int)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, EnumEducation?>>(0);
+                    builder.AddAttribute(1, "Field", EnumEducation.Middle);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.Education), typeof(EnumEducation?)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, IEnumerable<string>>>(0);
+                    builder.AddAttribute(1, "Field", Enumerable.Empty<string>());
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.Hobby), typeof(IEnumerable<string>)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, EnumEducation?>>(0);
+                    builder.AddAttribute(1, "Field", EnumEducation.Middle);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.Education), typeof(EnumEducation?)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.AddAttribute(4, nameof(ITableColumn.Lookup), new List<SelectedItem>()
+                    {
+                        new SelectedItem("", "全部"),
+                        new SelectedItem("1", "中学"),
+                    });
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, bool>>(0);
+                    builder.AddAttribute(1, "Field", true);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.Complete), typeof(bool)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.CloseComponent();
+
+                    builder.OpenComponent<TableColumn<Foo, bool>>(0);
+                    builder.AddAttribute(1, "Field", true);
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, nameof(Foo.Complete), typeof(bool)));
+                    builder.AddAttribute(3, nameof(ITableColumn.Searchable), true);
+                    builder.AddAttribute(3, nameof(ITableColumn.SearchFormItemMetadata), new StringSearchMetadata());
+                    builder.CloseComponent();
+                });
+            });
+        });
+
+        cut.Contains("bb-editor bb-search-form");
+
+        // 触发 Filter
+        var searchForm = cut.FindComponent<SearchForm>();
+        Assert.NotNull(searchForm);
+
+        var input = searchForm.FindComponent<BootstrapInput<string>>();
+        Assert.NotNull(input);
+
+        var cb = input.Instance.OnValueChanged;
+        Assert.NotNull(cb);
+        await cb("test");
+
+        var table = cut.FindComponent<Table<Foo>>();
+        Assert.NotNull(table);
+        await cut.InvokeAsync(() => table.Instance.QueryAsync());
+    }
+
+    [Fact]
+    public async Task SearchItems_Ok()
+    {
+        var localizer = Context.Services.GetRequiredService<IStringLocalizer<Foo>>();
+        var cut = Context.Render<BootstrapBlazorRoot>(pb =>
+        {
+            pb.AddChildContent<Table<Foo>>(pb =>
+            {
+                pb.Add(a => a.RenderMode, TableRenderMode.Table);
+                pb.Add(a => a.ShowToolbar, true);
+                pb.Add(a => a.ShowSearch, true);
+                pb.Add(a => a.UseSearchForm, true);
+                pb.Add(a => a.SearchItems, new List<SearchItem>()
+                {
+                    new SearchItem("Name", typeof(string), "名称") { Metadata = new StringSearchMetadata() }
+                });
+                pb.Add(a => a.SearchMode, SearchMode.Top);
+                pb.Add(a => a.OnQueryAsync, OnQueryAsync(localizer));
+                pb.Add(a => a.TableColumns, foo => builder =>
+                {
+                    builder.OpenComponent<TableColumn<Foo, string>>(0);
+                    builder.AddAttribute(1, "Field", "");
+                    builder.AddAttribute(2, "FieldExpression", Utility.GenerateValueExpression(foo, "Name", typeof(string)));
+                    builder.CloseComponent();
+                });
+            });
+        });
+
+        cut.Contains("bb-editor bb-search-form");
+
+        // 触发 Filter
+        var searchForm = cut.FindComponent<SearchForm>();
+        Assert.NotNull(searchForm);
+
+        var input = searchForm.FindComponent<BootstrapInput<string>>();
+        Assert.NotNull(input);
+
+        var cb = input.Instance.OnValueChanged;
+        Assert.NotNull(cb);
+        await cb("test");
+
+        var table = cut.FindComponent<Table<Foo>>();
+        Assert.NotNull(table);
+        await cut.InvokeAsync(() => table.Instance.QueryAsync());
     }
 
     [Fact]
