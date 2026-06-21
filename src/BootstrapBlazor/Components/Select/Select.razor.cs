@@ -247,7 +247,7 @@ public partial class Select<TValue> : ISelect, ILookup
 
         if (!Items.Any() && ValueType.IsEnum())
         {
-            var item = NullableUnderlyingType == null ? "" : PlaceHolder;
+            var item = IsNullable() ? PlaceHolder : "";
             Items = ValueType.ToSelectList(string.IsNullOrEmpty(item) ? null : new SelectedItem("", item));
         }
 
@@ -494,7 +494,7 @@ public partial class Select<TValue> : ISelect, ILookup
         // 修复：使用完整的未过滤列表来查找当前选中项
         // 避免在用户搜索时被外部 StateHasChanged 影响导致值被错误修改
         var allItems = GetRowsByItems();
-        
+
         var item = GetItemWithEnumValue()
             ?? allItems.Find(i => i.Value == CurrentValueAsString)
             ?? allItems.Find(i => i.Active)

@@ -436,13 +436,11 @@ public static class IEditItemExtensions
 
     internal static bool GetTextEllipsis(this ITableColumn col) => col.TextEllipsis ?? false;
 
-    internal static bool GetVisible(this ITableColumn col) => col.Visible ?? true;
+    internal static bool GetVisible(this ITableColumn col, BreakPoint point = BreakPoint.None) => col.Visible ?? true && col.ShownWithBreakPoint <= point;
 
     internal static bool GetShowCopyColumn(this ITableColumn col) => col.ShowCopyColumn ?? false;
 
     internal static bool GetShowTips(this ITableColumn col) => col.ShowTips ?? false;
 
     internal static Alignment GetAlign(this ITableColumn col) => col.Align ?? Alignment.None;
-
-    internal static int? GetColumnFixedWidth(this ITableColumn col, int width) => col.Fixed ? col.Width ?? width : col.Width;
 }

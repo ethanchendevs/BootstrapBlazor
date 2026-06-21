@@ -181,20 +181,36 @@ const addScript = content => {
     let link = scripts.filter(function(link) {
         return link.src.indexOf(url) > -1
     })
+    let created = false
     if (link.length === 0) {
+        created = true
         const script = document.createElement('script')
         link.push(script)
         script.setAttribute('src', content)
         document.body.appendChild(script)
         script.onload = () => {
-            script.setAttribute('loaded', true)
+            script.setAttribute('loaded', 'true')
+        }
+        script.onerror = () => {
+            script.setAttribute('loaded', 'error')
         }
     }
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
+        let count = 0
         const handler = setInterval(() => {
-            const done = link[0].getAttribute('loaded') === 'true'
-            if (done) {
+            const state = link[0].getAttribute('loaded')
+            if (state === 'true') {
                 clearInterval(handler)
+                resolve()
+            }
+            else if (state === 'error') {
+                clearInterval(handler)
+                console.error(`Failed to load script: ${content}`)
+                resolve()
+            }
+            else if (!created && ++count > 250) {
+                clearInterval(handler)
+                console.warn(`Timeout while loading script: ${content}`)
                 resolve()
             }
         }, 20)
@@ -238,21 +254,38 @@ const addLink = (href, rel = "stylesheet") => {
     let link = links.filter(function(link) {
         return link.href.indexOf(url) > -1
     })
+    let created = false
     if (link.length === 0) {
+        created = true
         const css = document.createElement('link')
         link.push(css)
         css.setAttribute("rel", rel)
         css.setAttribute('href', href)
         document.getElementsByTagName("head")[0].appendChild(css)
         css.onload = () => {
-            css.setAttribute('loaded', true)
+            css.setAttribute('loaded', 'true')
+        }
+        css.onerror = () => {
+            css.setAttribute('loaded', 'error')
         }
     }
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
+        let count = 0
         const handler = setInterval(() => {
-            const done = link[0].getAttribute('loaded') === 'true'
-            if (done) {
+            const el = link[0]
+            const state = el.getAttribute('loaded')
+            if (state === 'true' || el.sheet) {
                 clearInterval(handler)
+                resolve()
+            }
+            else if (state === 'error') {
+                clearInterval(handler)
+                console.error(`Failed to load stylesheet: ${href}`)
+                resolve()
+            }
+            else if (!created && ++count > 250) {
+                clearInterval(handler)
+                console.warn(`Timeout while loading stylesheet: ${href}`)
                 resolve()
             }
         }, 20)
@@ -324,7 +357,37 @@ const insertAfter = (element, newEl) => {
 }
 
 const drag = (element, start, move, end) => {
+    let dragging = false
+
+    const addDocumentListeners = () => {
+        EventHandler.on(document, 'mousemove', handleDragMove)
+        EventHandler.on(document, 'touchmove', handleDragMove)
+        EventHandler.on(document, 'mouseup', handleDragEnd)
+        EventHandler.on(document, 'touchend', handleDragEnd)
+        EventHandler.on(document, 'touchcancel', handleDragEnd)
+        EventHandler.on(window, 'mouseup', handleDragEnd)
+        EventHandler.on(window, 'touchend', handleDragEnd)
+        EventHandler.on(window, 'touchcancel', handleDragEnd)
+        EventHandler.on(window, 'blur', handleDragEnd)
+    }
+
+    const removeDocumentListeners = () => {
+        EventHandler.off(document, 'mousemove', handleDragMove)
+        EventHandler.off(document, 'touchmove', handleDragMove)
+        EventHandler.off(document, 'mouseup', handleDragEnd)
+        EventHandler.off(document, 'touchend', handleDragEnd)
+        EventHandler.off(document, 'touchcancel', handleDragEnd)
+        EventHandler.off(window, 'mouseup', handleDragEnd)
+        EventHandler.off(window, 'touchend', handleDragEnd)
+        EventHandler.off(window, 'touchcancel', handleDragEnd)
+        EventHandler.off(window, 'blur', handleDragEnd)
+    }
+
     const handleDragStart = e => {
+        if (dragging) {
+            handleDragEnd(e)
+        }
+
         let notDrag = false
         if (isFunction(start)) {
             notDrag = start(e) || false
@@ -336,16 +399,22 @@ const drag = (element, start, move, end) => {
             }
             e.stopPropagation()
 
-            document.addEventListener('mousemove', handleDragMove)
-            document.addEventListener('touchmove', handleDragMove)
-            document.addEventListener('mouseup', handleDragEnd)
-            document.addEventListener('touchend', handleDragEnd)
+            dragging = true
+            addDocumentListeners()
         }
     }
 
     const handleDragMove = e => {
+        if (!dragging) {
+            return
+        }
+
         if (e.touches && e.touches.length > 1) {
             return;
+        }
+
+        if (e.cancelable) {
+            e.preventDefault();
         }
 
         if (isFunction(move)) {
@@ -354,21 +423,20 @@ const drag = (element, start, move, end) => {
     }
 
     const handleDragEnd = e => {
+        if (!dragging) {
+            return
+        }
+
+        dragging = false
+        removeDocumentListeners()
+
         if (isFunction(end)) {
             end(e)
         }
-
-        const handler = window.setTimeout(() => {
-            window.clearTimeout(handler)
-            document.removeEventListener('mousemove', handleDragMove)
-            document.removeEventListener('touchmove', handleDragMove)
-            document.removeEventListener('mouseup', handleDragEnd)
-            document.removeEventListener('touchend', handleDragEnd)
-        }, 10)
     }
 
-    element.addEventListener('mousedown', handleDragStart)
-    element.addEventListener('touchstart', handleDragStart)
+    EventHandler.on(element, 'mousedown', handleDragStart)
+    EventHandler.on(element, 'touchstart', handleDragStart)
 }
 
 const getDescribedElement = (element, selector = 'aria-describedby', all = false) => {
@@ -667,10 +735,7 @@ export function getTheme(useLocalstorage = true) {
         theme = document.documentElement.getAttribute('data-bs-theme');
     }
 
-    if (theme === null || theme === 'auto') {
-        theme = getAutoThemeValue();
-    }
-    return theme;
+    return theme == null ? 'auto' : theme;
 }
 
 export function saveTheme(theme) {
@@ -684,8 +749,8 @@ export function getAutoThemeValue() {
 }
 
 export function setTheme(theme, sync) {
-    if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
+    if (theme === 'auto') {
+        document.documentElement.setAttribute('data-bs-theme', getAutoThemeValue())
     }
     else {
         document.documentElement.setAttribute('data-bs-theme', theme);
